@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import prisma from "@/lib/prisma.js"
-import { PrismaAdapter } from "@auth/prisma-adapter"
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
+// import { PrismaAdapter } from "@auth/prisma-adapter"
 import { sendVerificationRequest } from "./sendVerificationRequest.js"
 
 export default NextAuth({
