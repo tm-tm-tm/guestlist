@@ -1,0 +1,13 @@
+.container {
+    position: relative;
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 0.5fr;
+}
+
+.column {
+    background-color: #f0f0f0;
+}
+
+.columnMiddle {
+    background-color: #f8f8f8;
+}

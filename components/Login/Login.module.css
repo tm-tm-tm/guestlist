@@ -1,0 +1,86 @@
+.loginContainer {
+    position: fixed;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    top: 0;
+    right: 0;
+    margin: 0.4em;
+    padding: 0 0.2em;
+    z-index: 100;
+    background-color: grey;
+    /* width: 400px; */
+    height: 60px;
+    border-radius: 0.2em;
+}
+
+.username {
+    /* position: relative; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    width: auto;
+    background-color: white;
+    border-radius: 0.2em;
+    padding: 0 0.8em;
+    font-family: Inter;
+    margin: 0.2em;
+}
+
+.button {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    left: 0;
+    border-radius: 0.2em;
+    cursor: pointer;
+    /* background-color: rgba(161, 161, 161, 0.5);
+    border: 1px solid #3d3d3d;
+    box-shadow: var(--box-shadow); */
+    border: none;
+    transition: border-color 0.4s, background-color 0.2s;
+    margin: 0 0.2em;
+}
+
+.button:hover {
+    border: 2px solid outset;
+    border-color: #101010;
+    background-color: white;
+    /* filter: brightness(110%); */
+}
+
+.button:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    transform: translate(-50%, 50%);
+    margin: 1.4em 0;
+    padding: 0.4em 0.8em;
+    border-radius: 0.4em;
+    background: #101010;
+    color: #fff;
+    text-align: center;
+    opacity: 0;
+    font-size: 14px;
+    transition: scale 0.4s ease, opacity 0.4s ease;
+}
+
+.button:hover:before {
+    opacity: 1;
+}
+
+.button:active {
+    background-color: #cdcdcd;
+    border-color: silver;
+}
+
+.icon {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
