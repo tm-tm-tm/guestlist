@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react'
-// import Guestlist from '@/components/Guestlist/Guestlist'
+import Guestlist from '@/components/Guestlist/Guestlist'
 import PageTransition from '@/components/PageTransition/PageTransition'
 import ColumnLayout from '@/components/Layouts/ColumnLayout'
 
@@ -11,11 +11,12 @@ export default function Admin() {
             <PageTransition>
                 {
                     session
+                        // status === "authenticated"
                         ?
                         (
                             session.user.role === 'Admin' ?
                                 <ColumnLayout>
-                                    {/* <Guestlist /> */}
+                                    <Guestlist />
                                 </ColumnLayout>
                                 :
                                 <div>

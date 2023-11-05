@@ -1,0 +1,56 @@
+.container {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Two columns for the top row */
+    grid-template-rows: auto 1fr;
+    /* Auto row for the top, 1fr for the bottom */
+    box-sizing: border-box;
+    z-index: 100000;
+}
+
+.column {
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    /* text-align: center; */
+    /* height: 50%; */
+}
+
+.columnTop {
+    /* min-height: 50vh; */
+    grid-row: 1;
+    /* Place top columns in the first row */
+    background-color: gray;
+}
+
+.columnBottom {
+    /* height: 50vh; */
+    grid-row: 2;
+    /* Place the bottom column in the second row */
+    grid-column: 1 / span 2;
+    /* Span two columns for the bottom column */
+    background-color: #f8f8f8;
+}
+
+.table {
+    width: 100%;
+    border-radius: 0.2em;
+    border: 1px solid white;
+}
+
+.header {
+    background: blue;
+}
+
+.heading {
+    padding: 0.4em;
+}
+
+.rows {
+    padding: 0.4em;
+}
+
+.rows::selection {
+    background: blue;
+}
