@@ -19,6 +19,7 @@ export default function Guestlist() {
     const [access, setAccess] = useState('')
     // const [qrCodes, setQRCodes] = useState([]);
     const [loading, setLoading] = useState(false)
+    const [status, setStatus] = useState(null)
 
     // useEffect(() => {
     //     console.log("Guests:", guests)
@@ -35,52 +36,56 @@ export default function Guestlist() {
         readGuestlist()
     }, [access])
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+    const handleSubmit = (e) => {
+        e.preventDefault();
         const body = { firstName, lastName, instagram, email }
-        try {
-            const response = await fetch('/api/guestlist/guestlist', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body)
+
+        fetch('/api/guestlist/guestlist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        })
+            .then((response) => {
+                if (response.status !== 200) {
+                    console.log('something went wrong')
+                } else {
+                    resetForm();
+                    readGuestlist();
+                    console.log('form submitted successfully.')
+                }
             })
-            if (response.status !== 200) {
-                console.log('something went wrong')
-            } else {
-                resetForm()
-                readGuestlist()
-                console.log('form submitted successfully.')
-            }
-        } catch (error) {
-            console.log('there was an error submitting', error)
-        }
+            .catch((error) => {
+                console.log('there was an error submitting', error)
+            })
     }
 
-    const readGuestlist = async () => {
-        try {
-            const res = await fetch('/api/guestlist/guestlist', {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
+    const readGuestlist = () => {
+        fetch('/api/guestlist/guestlist', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        })
+            .then((res) => {
+                if (res.status !== 200) {
+                    console.log('something went wrong')
+                } else {
+                    return res.json()
+                }
             })
-
-            const guests = await res.json()
-
-            guests.forEach(guest => {
-                guest.timestamp = formatTimestamp(guest.timestamp)
-                guest.updatedAt = formatTimestamp(guest.updatedAt)
+            .then((guests) => {
+                if (guests) {
+                    guests.forEach((guest) => {
+                        guest.timestamp = formatTimestamp(guest.timestamp)
+                        guest.updatedAt = formatTimestamp(guest.updatedAt)
+                    })
+                    setGuests(guests)
+                    console.log('successfully returned guestlist.')
+                }
             })
-
-            setGuests(guests)
-
-            if (res.status !== 200) {
-                console.log('something went wrong')
-            } else {
-                console.log('successfully returned guestlist.')
-            }
-        } catch (error) {
-            console.log('error returning guestlist.', error)
-        }
+            .catch((error) => {
+                console.log('error returning guestlist.', error)
+            })
     }
+
 
     // // QR CODE AS IMAGE
     // async function generateQRCode(data) {
@@ -164,17 +169,14 @@ export default function Guestlist() {
         const res = await fetch(`/api/guestlist/guestlist`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id })
+            body: JSON.stringify({ id }),
         })
 
-        const { error } = await res.json()
-        if (error) {
-            setStatus("error")
-        }
+        // const { error } = await res.json()
+        // setStatus(error ? "error" : "success")
 
         setAccess(!access)
         setLoading(false)
-        // readGuestlist()
     }
 
     const deleteGuest = async (id) => {
@@ -199,9 +201,9 @@ export default function Guestlist() {
     }
 
     const formatTimestamp = (timestamp) => {
-        const date = new Date(timestamp);
-        const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'UTC' };
-        return date.toLocaleTimeString('en-US', options);
+        const date = new Date(timestamp)
+        const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', timeZone: 'UTC' }
+        return date.toLocaleTimeString('en-US', options)
     }
 
     const resetForm = () => {
@@ -213,26 +215,103 @@ export default function Guestlist() {
 
     const updateGuestlist = () => {
         readGuestlist()
-    };
+    }
 
     return (
         <>
             <div className={styles.container}>
                 <div className={styles.columnTop}>
-                    <GuestlistForm updateGuestlist={updateGuestlist} />
-                    <div>
-                        <button onClick={readGuestlist} >
-                            UPDATE GUESTLIST
-                        </button>
+
+                    <div className={styles.inputPanel}>
+                        <h1 className={styles.adminHeading}>
+                            ADMIN
+                        </h1>
+                        <div className={styles.adminForm}>
+                            <GuestlistForm />
+                        </div>
                     </div>
+                    {/* <form action="#" method="POST" onSubmit={(e) => handleSubmit(e)}>
+                        <div>
+                            <label>
+                                FIRST NAME
+                            </label>
+                            <input
+                                type="text"
+                                name="first-name"
+                                id="first-name"
+                                value={firstName}
+                                autoComplete="off"
+                                placeholder="Enter your first name."
+                                required
+                                onChange={(e) => setFirstName(e.target.value)}
+                            />
+                        </div>
+
+                        <div>
+                            <label>
+                                LAST NAME
+                            </label>
+                            <input
+                                type="text"
+                                name="last-name"
+                                id="last-name"
+                                value={lastName}
+                                autoComplete="off"
+                                placeholder="Enter your last name."
+                                required
+                                onChange={(e) => setLastName(e.target.value)}
+                            />
+                        </div>
+
+                        <div>
+                            <label>
+                                INSTAGRAM
+                            </label>
+                            <input
+                                type="text"
+                                name="instagram"
+                                id="instagram"
+                                value={instagram}
+                                autoComplete="off"
+                                placeholder="Enter your Instagram handle."
+                                required
+                                // onChange={(e) => setInstagram(e.target.value)}
+                                onChange={handleInstagramEntry}
+                            />
+                        </div>
+
+                        <div>
+                            <label>
+                                EMAIL
+                            </label>
+                            <input
+                                id="email-input"
+                                name="email"
+                                type="email"
+                                placeholder="Enter email address for updates."
+                                required
+                                autoComplete="off"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
+
+                        <div>
+                            <button>
+                                SUBMIT
+                            </button>
+                        </div>
+
+                    </form> */}
                 </div>
 
                 <div className={styles.columnTop}>
-                    <GuestlistAnalytics guests={guests} access={access} />
+                    <GuestlistAnalytics guests={guests} access={access} updateGuestlist={updateGuestlist} />
                 </div>
 
+
                 <div className={styles.columnBottom}>
-                    <motion.table className={styles.table}>
+                    <motion.table className={styles.table} >
                         <thead className={styles.header}>
                             <tr>
                                 <th className={styles.heading}>#</th>
@@ -242,10 +321,10 @@ export default function Guestlist() {
                                 <th>Email</th>
                                 <th>Added</th>
                                 <th>Updated</th>
+                                {/* <th>Access</th> */}
                                 <th>Access</th>
-                                <th>Checkbox</th>
-                                <th>QR</th>
-                                <th>&times;</th>
+                                {/* <th>QR</th> */}
+                                <th></th>
                             </tr>
                         </thead>
 
@@ -283,9 +362,9 @@ export default function Guestlist() {
                                         <td>
                                             {guest.updatedAt}
                                         </td>
-                                        <td>
+                                        {/* <td>
                                             {guest.access.toString()}
-                                        </td>
+                                        </td> */}
                                         <td>
                                             <input
                                                 type="checkbox"
@@ -293,13 +372,13 @@ export default function Guestlist() {
                                                 onChange={() => updateGuestAccess(guest.id)}
                                                 disabled={loading}
                                             />
-                                            <label>
+                                            {/* <label>
                                                 Access
-                                            </label>
+                                            </label> */}
                                         </td>
-                                        <td>
-                                            {/* {guest.qrCode && <img src={guest.qrCode} alt="QR Code" />} */}
-                                            {/* {guest.qrCode && (
+                                        {/* <td>
+                                            {guest.qrCode && <img src={guest.qrCode} alt="QR Code" />}
+                                            {guest.qrCode && (
                                                 <a
                                                     href={guest.qrCode}
                                                     download={`qr_code_${guest.id}.png`}
@@ -308,14 +387,15 @@ export default function Guestlist() {
                                                 >
                                                     Download QR Code
                                                 </a>
-                                            )} */}
-                                        </td>
+                                            )}
+                                        </td> */}
                                         <td>
                                             <button
                                                 onClick={() => deleteGuest(guest.id)}
                                                 disabled={loading}
+                                                className={styles.deleteButton}
                                             >
-                                                Delete Guest
+                                                x
                                             </button>
                                         </td>
                                     </motion.tr>
@@ -327,80 +407,6 @@ export default function Guestlist() {
             </div>
 
             <div>
-
-                {/* <form action="#" method="POST" onSubmit={(e) => handleSubmit(e)}>
-                    <div>
-                        <label>
-                            FIRST NAME
-                        </label>
-                        <input
-                            type="text"
-                            name="first-name"
-                            id="first-name"
-                            value={firstName}
-                            autoComplete="off"
-                            placeholder="Enter your first name."
-                            required
-                            onChange={(e) => setFirstName(e.target.value)}
-                        />
-                    </div>
-
-                    <div>
-                        <label>
-                            LAST NAME
-                        </label>
-                        <input
-                            type="text"
-                            name="last-name"
-                            id="last-name"
-                            value={lastName}
-                            autoComplete="off"
-                            placeholder="Enter your last name."
-                            required
-                            onChange={(e) => setLastName(e.target.value)}
-                        />
-                    </div>
-
-                    <div>
-                        <label>
-                            INSTAGRAM
-                        </label>
-                        <input
-                            type="text"
-                            name="instagram"
-                            id="instagram"
-                            value={instagram}
-                            autoComplete="off"
-                            placeholder="Enter your Instagram handle."
-                            required
-                            // onChange={(e) => setInstagram(e.target.value)}
-                            onChange={handleInstagramEntry}
-                        />
-                    </div>
-
-                    <div>
-                        <label>
-                            EMAIL
-                        </label>
-                        <input
-                            id="email-input"
-                            name="email"
-                            type="email"
-                            placeholder="Enter email address for updates."
-                            required
-                            autoComplete="off"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </div>
-
-                    <div>
-                        <button>
-                            SUBMIT
-                        </button>
-                    </div>
-
-                </form> */}
 
             </div>
         </>

@@ -15,9 +15,7 @@ export default function Admin() {
                         ?
                         (
                             session.user.role === 'Admin' ?
-                                <ColumnLayout>
-                                    <Guestlist />
-                                </ColumnLayout>
+                                <Guestlist />
                                 :
                                 <div>
                                     You do not have sufficient permissions to view this.

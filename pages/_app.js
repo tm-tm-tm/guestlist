@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { SessionProvider } from "next-auth/react"
 import '@/styles/globals.css'
 import Login from '@/components/Login/Login'
+import ColumnLayout from '@/components/Layouts/ColumnLayout'
 
 export default function App({
   Component,
@@ -12,12 +13,14 @@ export default function App({
   return (
     <>
       <SessionProvider session={session}>
-        <Login/>
-        <Component
-          {...pageProps}
-        // key={router.asPath}
-        />
-        <Analytics />
+        <ColumnLayout>
+          <Login />
+          <Component
+            {...pageProps}
+          // key={router.asPath}
+          />
+          <Analytics />
+        </ColumnLayout>
       </SessionProvider>
     </>
   )

@@ -9,11 +9,12 @@ export default function Home() {
   return (
     <>
       <main className={styles.main}>
-        <ColumnLayout>
-          <Card>
-            <GuestlistForm />
-          </Card>
-        </ColumnLayout>
+        <div className={styles.imageContainer}>
+          <div className={styles.image}>
+
+          </div>
+        </div>
+        <GuestlistForm />
       </main>
     </>
   )

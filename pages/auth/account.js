@@ -2,7 +2,12 @@ import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 
 const AccountPage = () => {
-    const { data: session } = useSession()
+    const { data: session, status, update } = useSession()
+    console.log("session:", session);
+
+    if (status === "loading") {
+        return <p>Loading...</p>
+    }
 
     return (
         <>
@@ -34,8 +39,6 @@ const AccountPage = () => {
 AccountPage.authpage = true
 
 export default AccountPage
-
-
 
 
 

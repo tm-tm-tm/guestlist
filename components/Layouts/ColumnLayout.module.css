@@ -5,9 +5,30 @@
 }
 
 .column {
-    background-color: #f0f0f0;
+    background-color: #fff;
 }
 
 .columnMiddle {
     background-color: #f8f8f8;
+}
+
+@media (max-width: 1000px) {
+    .outerContainer {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .innerContainer {
+        width: 100%;
+    }
+}
+
+@media (max-width: 450px) {
+    .container {
+        grid-template-columns: 0 1fr 0;
+    }
+
+    .columnMiddle {
+        width: 100%;
+    }
 }

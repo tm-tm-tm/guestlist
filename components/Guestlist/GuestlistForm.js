@@ -9,7 +9,6 @@ export default function GuestlistForm() {
     const [lastName, setLastName] = useState('')
     const [instagram, setInstagram] = useState('')
     const [email, setEmail] = useState('')
-    const [isOpen, setIsOpen] = useState(false)
     const [formStatus, setFormStatus] = useState(null)
     const [error, setError] = useState('')
 
@@ -62,7 +61,7 @@ export default function GuestlistForm() {
 
     return (
         <>
-            {
+            {/* {
                 session ?
                     <div
                         className={styles.formTitle}
@@ -82,115 +81,119 @@ export default function GuestlistForm() {
                         </button>
                     </div>
 
-            }
+            } */}
 
             {
                 session ?
-                    <div
-                        className={isOpen === true ? styles.formReveal : styles.formHidden}
-                    >
-                        <form
-                            action="#"
-                            method="POST"
-                            onSubmit={(e) => handleSubmit(e)}
-                        >
-                            <div className={styles.inputContainer}>
-                                <label className={styles.label}>
-                                    First Name
-                                </label>
-                                <input
-                                    className={styles.input}
-                                    type="text"
-                                    name="first-name"
-                                    id="first-name"
-                                    value={firstName}
-                                    autoComplete="off"
-                                    placeholder="Enter your first name."
-                                    required
-                                    onChange={(e) => setFirstName(e.target.value)}
-                                />
-                            </div>
+                    // <div
+                    //     className={isOpen === true ? styles.formReveal : styles.formHidden}
+                    // >
+                    <div className={styles.outerContainer}>
+                        <div className={styles.innerContainer}>
+                            <form
+                                action="#"
+                                method="POST"
+                                onSubmit={(e) => handleSubmit(e)}
+                                className={styles.form}
+                            >
+                                <div className={styles.inputContainer}>
+                                    <label className={styles.label}>
+                                        First Name
+                                    </label>
+                                    <input
+                                        className={styles.input}
+                                        type="text"
+                                        name="first-name"
+                                        id="first-name"
+                                        value={firstName}
+                                        autoComplete="off"
+                                        placeholder=""
+                                        required
+                                        onChange={(e) => setFirstName(e.target.value)}
+                                    />
+                                </div>
 
-                            <div className={styles.inputContainer}>
-                                <label className={styles.label}>
-                                    Last Name
-                                </label>
-                                <input
-                                    className={styles.input}
-                                    type="text"
-                                    name="last-name"
-                                    id="last-name"
-                                    value={lastName}
-                                    autoComplete="off"
-                                    placeholder="Enter your last name."
-                                    required
-                                    onChange={(e) => setLastName(e.target.value)}
-                                />
-                            </div>
+                                <div className={styles.inputContainer}>
+                                    <label className={styles.label}>
+                                        Last Name
+                                    </label>
+                                    <input
+                                        className={styles.input}
+                                        type="text"
+                                        name="last-name"
+                                        id="last-name"
+                                        value={lastName}
+                                        autoComplete="off"
+                                        placeholder=""
+                                        required
+                                        onChange={(e) => setLastName(e.target.value)}
+                                    />
+                                </div>
 
-                            <div className={styles.inputContainer}>
-                                <label className={styles.label}>
-                                    Instagram
-                                </label>
-                                <input
-                                    className={styles.input}
-                                    type="text"
-                                    name="instagram"
-                                    id="instagram"
-                                    value={instagram}
-                                    autoComplete="off"
-                                    placeholder="Enter your Instagram handle."
-                                    required
-                                    // onChange={(e) => setInstagram(e.target.value)}
-                                    onChange={handleInstagramEntry}
-                                />
-                            </div>
+                                <div className={styles.inputContainer}>
+                                    <label className={styles.label}>
+                                        Instagram
+                                    </label>
+                                    <input
+                                        className={styles.input}
+                                        type="text"
+                                        name="instagram"
+                                        id="instagram"
+                                        value={instagram}
+                                        autoComplete="off"
+                                        placeholder=""
+                                        required
+                                        // onChange={(e) => setInstagram(e.target.value)}
+                                        onChange={handleInstagramEntry}
+                                    />
+                                </div>
 
-                            <div className={styles.inputContainer}>
-                                <label className={styles.label}>
-                                    Email
-                                </label>
-                                <input
-                                    className={styles.input}
-                                    id="email-input"
-                                    name="email"
-                                    type="email"
-                                    placeholder="Enter email address for updates."
-                                    required
-                                    autoComplete="off"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                            </div>
+                                <div className={styles.inputContainer}>
+                                    <label className={styles.label}>
+                                        Email
+                                    </label>
+                                    <input
+                                        className={styles.input}
+                                        id="email-input"
+                                        name="email"
+                                        type="email"
+                                        placeholder=""
+                                        required
+                                        autoComplete="off"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                </div>
 
-                            <div className={styles.buttonContainer}>
-                                <button
-                                    className={styles.button}
+                                <div className={styles.buttonContainer}>
+                                    <button
+                                        className={styles.button}
                                     // disabled={totalGuests >= capacity}
-                                >
-                                    {formStatus === 'processing...' ? (
-                                        <div className={styles.loadingIndicator}>
-                                            <GearSVG />
+                                    >
+                                        {formStatus === 'processing...' ? (
+                                            <div className={styles.loadingIndicator}>
+                                                <GearSVG />
+                                            </div>
+                                        ) : (
+                                            'SUBMIT'
+                                        )}
+                                    </button>
+                                    {formStatus === 'success' && (
+                                        <div className={styles.statusMessage}>
+                                            You have been added to the guestlist. Thank you.
                                         </div>
-                                    ) : (
-                                        'SUBMIT'
                                     )}
-                                </button>
-                                {formStatus === 'success' && (
-                                    <div className={styles.statusMessage}>
-                                        You have been added to the guestlist. Thank you.
-                                    </div>
-                                )}
-                                {formStatus === 'error' && (
-                                    <div className={styles.statusMessage}>
-                                        Please try again.
-                                        {/* {error} */}
-                                    </div>
-                                )}
-                            </div>
-
-                        </form>
+                                    {formStatus === 'error' && (
+                                        <div className={styles.statusMessage}>
+                                            Please try again.
+                                            {/* {error} */}
+                                        </div>
+                                    )}
+                                </div>
+                            </form>
+                        </div>
                     </div>
+                    // </div>
                     :
                     ''
             }
