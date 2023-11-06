@@ -86,7 +86,6 @@ export default function Guestlist() {
             })
     }
 
-
     // // QR CODE AS IMAGE
     // async function generateQRCode(data) {
     //     try {
@@ -315,8 +314,8 @@ export default function Guestlist() {
                         <thead className={styles.header}>
                             <tr>
                                 <th className={styles.heading}>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th className={styles.firstNameColumn}>First Name</th>
+                                <th className={styles.lastNameColumn}>Last Name</th>
                                 {/* <th>Instagram</th> */}
                                 <th className={styles.emailColumn}>Email</th>
                                 <th className={styles.addedColumn}>Added</th>
@@ -344,10 +343,10 @@ export default function Guestlist() {
                                         <td className={styles.rows}>
                                             {guest.id}
                                         </td>
-                                        <td>
+                                        <td className={styles.firstNameColumn}>
                                             {guest.firstName}
                                         </td>
-                                        <td>
+                                        <td className={styles.lastNameColumn}>
                                             {guest.lastName}
                                         </td>
                                         {/* <td>
