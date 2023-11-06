@@ -1,6 +1,6 @@
 /* Default styles for the full-width layout */
 .container {
-    height: 100%;
+    height: 100vh;
     display: grid;
     grid-template-columns: 1fr 2.5fr;
     /* Three columns for the top row */
@@ -63,6 +63,23 @@
 
 .adminForm {
     padding: 0.4em;
+}
+
+.searchContainer {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.4em;
+}
+
+.searchInput {
+    all: unset;
+    height: 2em;
+    width: 100%;
+    color: black;
+    background-color: silver;
+    box-sizing: border-box;
+    border-radius: 0.2em;
+    padding-left: 0.5em;
 }
 
 .table {

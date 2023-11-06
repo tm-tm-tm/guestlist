@@ -48,7 +48,12 @@ const Card = ({ children }) => {
                                     {
                                         isOpen ?
                                             <>
-                                                <CloseSVG />
+                                                {/* <CloseSVG /> */}
+                                                <div className={styles.scrollElement}>
+                                                    <p className={styles.scroll}>
+                                                        This is an event notification.
+                                                    </p>
+                                                </div>
                                             </>
                                             :
                                             <p>RSVP</p>

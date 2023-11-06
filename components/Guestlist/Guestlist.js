@@ -20,6 +20,8 @@ export default function Guestlist() {
     // const [qrCodes, setQRCodes] = useState([]);
     const [loading, setLoading] = useState(false)
     const [status, setStatus] = useState(null)
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredGuests, setFilteredGuests] = useState([]);
 
     // useEffect(() => {
     //     console.log("Guests:", guests)
@@ -199,6 +201,21 @@ export default function Guestlist() {
         setInstagram(value)
     }
 
+    const handleSearchInputChange = (e) => {
+        const query = e.target.value
+        setSearchQuery(query)
+
+        // Filter the guests based on the search query
+        const filteredData = guests.filter((guest) => {
+            const fullName = guest.firstName.toLowerCase() + ' ' + guest.lastName.toLowerCase()
+            return fullName.includes(query.toLowerCase())
+        })
+
+        setFilteredGuests(filteredData)
+    }
+
+    const guestData = searchQuery ? filteredGuests : guests;
+
     const formatTimestamp = (timestamp) => {
         const date = new Date(timestamp)
         const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', timeZone: 'UTC' }
@@ -227,6 +244,16 @@ export default function Guestlist() {
                         </h1>
                         <div className={styles.adminForm}>
                             <GuestlistForm />
+                        </div>
+
+                        <div className={styles.searchContainer}>
+                            <input
+                                type="text"
+                                placeholder="Search by name"
+                                value={searchQuery}
+                                onChange={handleSearchInputChange}
+                                className={styles.searchInput}
+                            />
                         </div>
                     </div>
                     {/* <form action="#" method="POST" onSubmit={(e) => handleSubmit(e)}>
@@ -329,7 +356,7 @@ export default function Guestlist() {
 
                         <tbody className={styles.body}>
                             <AnimatePresence >
-                                {guests?.map((guest) => (
+                                {guestData?.map((guest) => (
                                     <motion.tr
                                         key={guest.id}
                                         layout
@@ -337,7 +364,7 @@ export default function Guestlist() {
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
                                         transition={{
-                                            layout: { duration: 0.5 },
+                                            layout: { duration: 0.2 },
                                         }}
                                     >
                                         <td className={styles.rows}>
