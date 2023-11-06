@@ -1,18 +1,18 @@
 @keyframes loading-pulse {
     0% {
-        background-color: hsl(0, 0%, 5%);
+        background-color: rgba(0, 0, 0, 0.9);
     }
 
     60% {
-        background-color: hsl(0, 0%, 10%);
+        background-color: rgba(0, 0, 0, 0.1);
     }
 
     80% {
-        background-color: hsl(0, 0%, 25%);
+        background-color: rgba(0, 0, 0, 0.25);
     }
 
     100% {
-        background-color: hsl(0, 0%, 10%);
+        background-color: rgba(0, 0, 0, 0.1);
     }
 }
 
@@ -87,7 +87,7 @@
 }
 
 .buttonContainer {
-    margin-top: 0.2em;
+    margin-top: 0.4em;
 }
 
 .lockedButton {
@@ -103,8 +103,8 @@
 
 .lockedButton:disabled {
     color: rgb(175, 175, 175);
-    background-color: hsla(0, 0%, 20%, 0.609);
-    border-color: hsla(0, 0%, 75%, 0.61);
+    background-color: hsla(0, 0%, 41%, 0.609);
+    border-color: rgba(99, 99, 99, 0.836);
     cursor: not-allowed;
 }
 
@@ -116,7 +116,7 @@
     align-items: center;
     left: 50%;
     transform: translate(-50%, 100%);
-    margin: 0.6em 0;
+    margin: 1em 0;
     padding: 0.4em 1em;
     border-radius: 0.2em;
     color: black;

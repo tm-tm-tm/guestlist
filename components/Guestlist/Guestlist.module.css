@@ -49,6 +49,10 @@
     font-weight: 500;
 }
 
+.adminForm {
+    padding: 0.4em;
+}
+
 
 .table {
     width: 100%;
