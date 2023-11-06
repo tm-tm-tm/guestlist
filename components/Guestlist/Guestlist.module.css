@@ -244,4 +244,8 @@
     .columnTop {
         grid-column: 1;
     }
+
+    .adminHeading {
+        height: 2em;
+    }
 }
