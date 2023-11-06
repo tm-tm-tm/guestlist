@@ -9,6 +9,7 @@
     box-sizing: border-box;
     /* display: flex;
     flex-direction: column; */
+    background: white;
 }
 
 .columnTop {
@@ -20,6 +21,11 @@
     margin: 0.2em;
     /* padding: 0.4em; */
     color: white;
+    /* color: rgb(161, 161, 161); */
+    background: rgba(192, 192, 192, 0.2);
+    border: 1px solid rgba(192, 192, 192, 0.5);
+    backdrop-filter: blur(10px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
 }
 
 .columnBottom {
@@ -29,8 +35,10 @@
     /* Span three columns for the bottom column */
     background-color: #f8f8f8;
     margin: 0.2em;
-    height: 100%;
+    padding-bottom: 0.2em; /* Add padding to the bottom of the column */
+    box-sizing: border-box;
 }
+
 
 .inputPanel {
     display: flex;
@@ -40,8 +48,10 @@
 }
 
 .adminHeading {
-    background-color: red;
-    margin: 0.2em;
+    background: rgba(0, 0, 0, 0.9);
+    border: 0.2px solid rgba(192, 192, 192, 0.5);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px; 
+    backdrop-filter: blur(10px);    margin: 0.2em;
     margin-bottom: 0;
     padding: 0.4em;
     box-sizing: border-box;
@@ -52,7 +62,6 @@
 .adminForm {
     padding: 0.4em;
 }
-
 
 .table {
     width: 100%;
@@ -65,8 +74,10 @@
     box-sizing: border-box;
     border-collapse: collapse;
     border-spacing: 0;
-    background-color: black;
-    color: rgb(115, 115, 115);
+    color: rgb(161, 161, 161);
+    background: rgba(192, 192, 192, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
 }
 
 .table thead th {
@@ -76,6 +87,8 @@
     text-align: left;
     font-weight: 500;
     color: grey;
+    box-sizing: border-box;
+
 }
 
 .table thead th:hover {
@@ -104,8 +117,6 @@
     /* Adjust to control row height */
     text-align: left;
 }
-
-/* */
 
 /* Add this rule to align text to the left in both table header cells and table data cells */
 .table th,
@@ -189,12 +200,12 @@
     width: 2em;
     height: 2em;
     background: black;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
     border: none;
     outline: none;
     color: white;
     border-radius: 0.2em;
 }
-
 
 /* Media query for a max-width of 900px */
 @media (max-width: 1100px) {
@@ -208,7 +219,6 @@
     .columnTop {
         grid-row: 1;
         /* Place top columns in the first row */
-        background-color: black;
         border-radius: 0.2em;
         margin: 0.2em;
         color: white;
@@ -229,9 +239,8 @@
         justify-content: space-between;
         height: auto;
     }
-
     .adminHeading {
-        aspect-ratio: 1/1;
+        height: 2em;
     }
 }
 
@@ -249,7 +258,5 @@
         grid-column: 1;
     }
 
-    .adminHeading {
-        height: 2em;
-    }
+  
 }

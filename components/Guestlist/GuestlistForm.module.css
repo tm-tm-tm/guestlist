@@ -35,29 +35,6 @@
     }
 }
 
-/* 
-@keyframes revealForm {
-    0% {
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
-    }
-
-    80% {
-        margin-top: 0.4em;
-        opacity: 0;
-        height: auto;
-        max-height: 10em;
-    }
-
-    100% {
-        margin-top: 0.4em;
-        opacity: 1;
-        height: auto;
-        max-height: 10em;
-    }
-} */
-
 .outerContainer {
     height: auto;
     width: 100%;
@@ -87,12 +64,13 @@
     align-items: center;
     padding: 0.4em;
     border-radius: 0.2em;
-    background-color: silver;
     margin-top: 0.6em;
-    font-family: Inter;
-    font-size: 14px;
-    color: black;
     cursor: pointer;
+    color: black;
+    background: rgba(192, 192, 192, 0.2);
+    border: 1px solid rgba(192, 192, 192, 0.5);
+    backdrop-filter: blur(10px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
 }
 
 .formHidden {
@@ -118,20 +96,31 @@
     position: relative;
     cursor: pointer;
     width: 100%;
-    height: 2.5em;
+    height: 28px;
     border: 2px solid silver;
     border-radius: 0.2em;
-    transition: border-color 0.5s, color 0.5s, box-shadow 0.5s;
+    color: rgb(0, 0, 0);
+    background: rgba(192, 192, 192, 0.2);
+    border: 0.2px solid rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
 }
 
 .button:hover {
-    color: #0261FF;
-    border-color: #0261FF;
+    color: rgba(0, 0, 0, 0.8);
+    background: rgba(192, 192, 192, 0.9);
+    border: 0.2px solid rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
+    transition: all 0.4s ease;
 }
 
 .button:active {
-    color: red;
-    border-color: red;
+    color: rgb(0, 0, 0);
+    background: rgba(192, 192, 192, 0.2);
+    border: 0.2px solid rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
 }
 
 .lockedButton {
@@ -178,27 +167,40 @@
     margin-bottom: 0.2em;
 }
 
-.label {
-    display: flex;
-    width: 180px;
-    padding: 0.4em;
+.input {
+    position: relative;
+    width: 100%;
+    height: 28px;
     border-radius: 0.2em;
-    background-color: silver;
-    margin-right: 0.2em;
+    text-decoration: none;
+    padding-left: 148px;
+    border: none;
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.9);
+    border: 0.2px solid rgba(192, 192, 192, 0.5);
+    transition: border-color 0.3s; /* Add a smooth transition for the border color change */
+}
+
+.input:focus {
+    border-color: black; /* Change the border color when the element is focused */
+    outline: none; /* Optionally, remove the default focus outline (not recommended for accessibility) */
+}
+
+.label {
+    position: absolute;
+    width: 140px;
+    height: 28px;
+    margin: 0;
+    z-index: 1;
+    border-radius: 0.2em;
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Inter;
-    font-size: 14px;
-    color: black;
-}
-
-.input {
-    width: 100%;
-    border-radius: 0.2em;
-    text-decoration: none;
-    padding-left: 0.4em;
-    border: none;
+    color: rgba(0, 0, 0, 0.9);
+    background: rgba(192, 192, 192, 0.2);
+    border: 0.2px solid rgba(192, 192, 192, 0.5);
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .loadingIndicator {
@@ -227,13 +229,11 @@
     padding: 0.4em 0.6em;
     border-radius: 0.4em;
     background-color: black;
-    color: #FFF;    
+    color: #FFF;
     animation: status 2s cubic-bezier(0.8, 0, 0.4, 1);
     animation-fill-mode: forwards;
 }
 
-@media (max-width: 900px) {
-}
+@media (max-width: 900px) {}
 
-@media (max-width: 450px) {
-}
+@media (max-width: 450px) {}

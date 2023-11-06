@@ -8,7 +8,10 @@
 .innerContainer {
     padding: 0.4em;
     border-radius: 0.2em;
-    background: red;
+    background: rgba(0, 0, 0, 0.9);
+    border: 0.2px solid rgba(192, 192, 192, 0.5);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px; 
+    backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -105,7 +108,7 @@
     position: absolute;
     box-sizing: border-box;
     height: 0.6em;
-    background: #00ff00;
+    background: #61ff61;
     z-index: 10;
     overflow: hidden;
     border-radius: 1em;

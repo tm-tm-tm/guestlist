@@ -23,7 +23,7 @@ main {
   -moz-osx-font-smoothing: grayscale;
   min-height: -webkit-fill-available;
   scroll-behavior: smooth;
-  overflow: none;
+  background: black;
 }
 
 @media screen and (display-mode: standalone) {}

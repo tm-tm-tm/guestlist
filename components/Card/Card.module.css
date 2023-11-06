@@ -55,8 +55,9 @@
     box-sizing: border-box;
     color: rgb(161, 161, 161);
     background: rgba(192, 192, 192, 0.2);
-    border: 1px solid rgba(192, 192, 192, 0.5);
+    border: 0.2px solid rgba(192, 192, 192, 0.5);
     backdrop-filter: blur(10px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
 }
 
 .cardLoading {
@@ -80,15 +81,38 @@
 
 .formTitle {
     display: flex;
+    height: 28px;
     justify-content: center;
     align-items: center;
-    padding: 0.4em;
+    /* padding: 0.4em; */
     border-radius: 0.2em;
     color: black;
     background: rgba(192, 192, 192, 0.2);
     border: 1px solid rgba(192, 192, 192, 0.5);
     margin-top: 0.4em;
     cursor: pointer;
+    background: rgba(192, 192, 192, 0.2);
+    border: 0.2px solid rgba(192, 192, 192, 0.5);
+    backdrop-filter: blur(10px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.formTitle:hover {
+    color: rgba(0, 0, 0, 0.8);
+    background: rgba(192, 192, 192, 0.9);
+    border: 0.2px solid rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
+    transition: all 0.4s ease;
+}
+
+.formTitle:active {
+    color: rgb(0, 0, 0);
+    background: rgba(192, 192, 192, 0.2);
+    border: 0.2px solid rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
 }
 
 .formHidden {
@@ -140,12 +164,12 @@
     align-items: center;
     left: 50%;
     transform: translate(-50%, 100%);
-    margin: 1em 0;
+    margin: 1.2em 0;
     padding: 0.4em 1em;
     border-radius: 0.2em;
     color: black;
     background: rgba(192, 192, 192, 0.1);
-    border: 1px solid rgba(192, 192, 192, 0.5);
+    border: 0.2px solid rgba(192, 192, 192, 0.5);
     text-align: center;
     opacity: 0;
     transition: opacity 0.4s ease;
