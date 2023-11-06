@@ -288,4 +288,8 @@
         grid-column: 1;
     }
 
+    .adminForm {
+        padding-bottom: 4em;
+    }
+
 }
