@@ -15,16 +15,12 @@ export default function App({
   return (
     <>
       <SessionProvider session={session}>
-        {/* <ColumnLayout> */}
-        {/* <HalfPageLayout> */}
         <Login />
         <Component
           {...pageProps}
         // key={router.asPath}
         />
         <Analytics />
-        {/* </HalfPageLayout> */}
-        {/* </ColumnLayout> */}
       </SessionProvider>
     </>
   )
