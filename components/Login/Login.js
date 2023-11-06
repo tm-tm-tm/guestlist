@@ -2,10 +2,10 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import Link from "next/link"
 import styles from './Login.module.css'
 
-import UserOutlineSVG from "@/assets/svg/UserOutlineSVG"
 import ClipboardSVG from "@/assets/svg/ClipboardSVG"
 import LoginArrowSVG from "@/assets/svg/LoginArrowSVG"
 import LogoutArrowSVG from "@/assets/svg/LogoutArrowSVG";
+import UserSVG from "@/assets/svg/UserSVG"
 
 export default function Login() {
     const { data: session } = useSession()
@@ -38,7 +38,7 @@ export default function Login() {
                         >
                             <Link href="/auth/account">
                                 <span className={styles.icon}>
-                                    <UserOutlineSVG />
+                                    <UserSVG />
                                 </span>
                             </Link>
                         </button>
@@ -73,67 +73,3 @@ export default function Login() {
         </>
     )
 }
-
-
-
-
-
-// export default function Login() {
-//   const { data: session } = useSession();
-
-//   return (
-//     <div className={styles.loginContainer}>
-//       {session ? (
-//         <LoggedInContent session={session} />
-//       ) : (
-//         <NotLoggedInContent />
-//       )}
-//     </div>
-//   );
-// }
-
-// function LoggedInContent({ session }) {
-//   return (
-//     <>
-//       {session.user.role === "Admin" && (
-//         <ButtonWithLink tooltip="Admin" href="/protected">
-//           <ClipboardSVG />
-//         </ButtonWithLink>
-//       )}
-
-//       <div className={styles.username}>{session.user.email}</div>
-
-//       <ButtonWithLink tooltip="Account" href="/auth/account">
-//         <UserOutlineSVG />
-//       </ButtonWithLink>
-
-//       <button
-//         className={styles.button}
-//         data-tooltip="Logout"
-//         onClick={() => signOut({ callbackUrl: "/" })}
-//       >
-//         <span className={styles.icon}>
-//           <LogoutArrowSVG />
-//         </span>
-//       </button>
-//     </>
-//   );
-// }
-
-// function NotLoggedInContent() {
-//   return (
-//     <ButtonWithLink tooltip="Login" href="/auth/signin">
-//       <LoginArrowSVG />
-//     </ButtonWithLink>
-//   );
-// }
-
-// function ButtonWithLink({ tooltip, href, children }) {
-//   return (
-//     <button className={styles.button} data-tooltip={tooltip}>
-//       <Link href={href}>
-//         <span className={styles.icon}>{children}</span>
-//       </Link>
-//     </button>
-//   );
-// }

@@ -20,15 +20,6 @@ const Card = ({ children }) => {
                     dragTransition={{ bounceStiffness: 100, bounceDamping: 20 }}
                     dragConstraints={cardConstraints}
                 >
-                    {/* <Image
-                        src="https://miyerypozbkyqwjxvash.supabase.co/storage/v1/object/sign/TEST/SET_L_V01.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJURVNUL1NFVF9MX1YwMS5wbmciLCJpYXQiOjE2OTkyNTIwNDYsImV4cCI6MTg1NjkzMjA0Nn0.jo_rj2hfnrP03LoJyPcwThncAbaZiGjGIYaomx1W5Tc&t=2023-11-06T06%3A27%3A26.537Z"
-                        width={400}
-                        height={400}
-                        alt="Logo"
-                        priority
-                        // fill
-                        className={`${styles.image} ${styles.cardLoading}`}
-                    /> */}
 
                     {/* <Image
                         src=""

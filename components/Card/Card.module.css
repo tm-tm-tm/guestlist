@@ -16,6 +16,26 @@
     }
 }
 
+@keyframes formRevealAnimation {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes formHideAnimation {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
 .container {
     position: relative;
     width: 100%;
@@ -76,14 +96,18 @@
     opacity: 0;
     overflow: hidden;
     transition: all 0.5s ease;
+    animation: formHideAnimation 0.2s ease forwards;
 }
 
 .formReveal {
     margin-top: 0.4em;
-    opacity: 1;
+    /* opacity: 1; */
     height: auto;
     max-height: 12em;
     transition: all 0.5s ease;
+    opacity: 0;
+    animation: formRevealAnimation 0.5s ease forwards;
+    animation-delay: 0.25s;
 }
 
 .buttonContainer {
