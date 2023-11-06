@@ -1,18 +1,155 @@
+@keyframes loading-pulse {
+    0% {
+        background-color: hsl(0, 0%, 5%);
+    }
+
+    60% {
+        background-color: hsl(0, 0%, 10%);
+    }
+
+    80% {
+        background-color: hsl(0, 0%, 25%);
+    }
+
+    100% {
+        background-color: hsl(0, 0%, 10%);
+    }
+}
+
 .container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    border-radius: 0.4em;
+    box-sizing: border-box;
+}
+
+.card {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    /* width: 50%;
-    height: 50%; */
-    aspect-ratio: 4 / 5;
+    /* aspect-ratio: 1/1; */
+    padding: 0.4em;
+    border-radius: 0.4em;
+    z-index: 0;
+    cursor: grab;
+    box-sizing: border-box;
+    color: rgb(161, 161, 161);
+    background: rgba(192, 192, 192, 0.2);
+    border: 1px solid rgba(192, 192, 192, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.cardLoading {
+    animation: loading-pulse 1s linear infinite alternate;
+}
+
+.image {
+    /* aspect-ratio: 4 / 5; */
+    /* object-fit: cover; */
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 0.4em;
-    background-color: aquamarine;
+    width: 400px;
+    height: 400px;
+    border-radius: 0.2em;
+    overflow: hidden;
+    user-select: none;
+    pointer-events: none;
+    box-sizing: border-box;
 }
 
-/* .form {
+.formTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.4em;
+    border-radius: 0.2em;
+    color: black;
+    background: rgba(192, 192, 192, 0.2);
+    border: 1px solid rgba(192, 192, 192, 0.5);
+    margin-top: 0.4em;
+    cursor: pointer;
+}
 
-} */
+.formHidden {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.formReveal {
+    margin-top: 0.4em;
+    opacity: 1;
+    height: auto;
+    max-height: 12em;
+    transition: all 0.5s ease;
+}
+
+.buttonContainer {
+    margin-top: 0.2em;
+}
+
+.lockedButton {
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+    /* height: 3em; */
+    padding: 0.6em;
+    border: none;
+    border-radius: 0.2em;
+    transition: border-color 0.5s, color 0.5s, box-shadow 0.5s;
+}
+
+.lockedButton:disabled {
+    color: rgb(175, 175, 175);
+    background-color: hsla(0, 0%, 20%, 0.609);
+    border-color: hsla(0, 0%, 75%, 0.61);
+    cursor: not-allowed;
+}
+
+.lockedButton:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    margin: 0.6em 0;
+    padding: 0.4em 1em;
+    border-radius: 0.2em;
+    color: black;
+    background: rgba(192, 192, 192, 0.1);
+    border: 1px solid rgba(192, 192, 192, 0.5);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.lockedButton:hover:before {
+    opacity: 1;
+}
+
+@media (max-width: 900px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .leftHalf {
+        width: 100%;
+    }
+
+    .rightHalf {
+        width: 100%;
+    }
+}
+
+@media (max-width: 450px) {
+    .card {
+        width: 10em;
+        height: 10em;
+    }
+
+}

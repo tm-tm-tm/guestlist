@@ -27,8 +27,8 @@ const AccountPage = () => {
                                     <>
                                         <p>Name: {session.user.name}</p>
                                         <p>Email: {session.user.email}</p>
-                                        <p>ID: {session.user.id}</p>
-                                        <p>Role: {session.user.role}</p>
+                                        {/* <p>ID: {session.user.id}</p>
+                                        <p>Role: {session.user.role}</p> */}
                                     </>
                                 ) : (
                                     <>

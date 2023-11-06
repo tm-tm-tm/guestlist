@@ -4,7 +4,7 @@ import Image from 'next/image'
 import styles from './HalfPageLayout.module.css'
 import PageTransition from '@/components/PageTransition/PageTransition'
 
-const HalfPageLayout = ({ children }) => {
+const HalfPageLayout = ({ children, cardConstraints }) => {
 
   return (
     <>
@@ -15,9 +15,12 @@ const HalfPageLayout = ({ children }) => {
           </div>
 
           <div className={styles.rightHalf} >
-            <div className={styles.innerContainer} >
+            <motion.div
+              className={styles.innerContainer}
+              dragConstraints={cardConstraints}
+            >
               {children}
-            </div>
+            </motion.div>
           </div>
         </div>
       </PageTransition>
