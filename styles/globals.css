@@ -25,4 +25,19 @@ main {
   scroll-behavior: smooth;
 }
 
+.link {
+  all: unset;
+  position: absolute;
+  top: 0;
+  margin: 1em;
+  color: rgb(161, 161, 161);
+  background: rgba(192, 192, 192, 0.2);
+  border: 1px solid rgba(192, 192, 192, 0.5);
+  border-radius: 2em;
+  padding: 0.2em 1em;
+  cursor: pointer;
+  color: grey;
+}
+
+
 @media screen and (display-mode: standalone) {}

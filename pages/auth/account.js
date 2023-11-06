@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
+import HalfPageLayout from '@/components/Layouts/HalfLayout/HalfPageLayout'
+import styles from '@/components/SignInForm/SignInForm.module.css'
 
 const AccountPage = () => {
     const { data: session, status, update } = useSession()
@@ -11,27 +13,32 @@ const AccountPage = () => {
 
     return (
         <>
-            {
-                session ?
-                    <>
-                        This is your account page.
-                        <div>
-                            <p>Name: {session.user.name}</p>
-                            <p>Email: {session.user.email}</p>
-                            <p>ID: {session.user.id}</p>
-                            <p>Role: {session.user.role}</p>
-                        </div>
+            <HalfPageLayout>
+                <div className={styles.formContainer}>
+                    {
+                        session ?
+                            <>
+                                <p>Name: {session.user.name}</p>
+                                <p>Email: {session.user.email}</p>
+                                <p>ID: {session.user.id}</p>
+                                <p>Role: {session.user.role}</p>
 
-                    </>
-                    :
-                    <>
-                        You must be logged in to view your account page
-                    </>
-            }
 
-            <Link href={'/'} >
-                Return to Home Page
-            </Link>
+                            </>
+                            :
+                            <>
+                                You must be logged in to view your account page
+                            </>
+                    }
+                </div>
+
+                <Link
+                    href={'/'}
+                    className={styles.link}
+                >
+                    Return to Home Page
+                </Link>
+            </HalfPageLayout>
         </>
     )
 }
@@ -39,7 +46,4 @@ const AccountPage = () => {
 AccountPage.authpage = true
 
 export default AccountPage
-
-
-
 

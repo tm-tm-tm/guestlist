@@ -3,6 +3,7 @@ import { signIn } from 'next-auth/react'
 import styles from './SignInForm.module.css'
 
 import GearSVG from '@/assets/svg/GearSVG'
+import Link from 'next/link'
 
 export default function EmailSignInForm() {
   const [formStatus, setFormStatus] = useState(null)
@@ -18,33 +19,50 @@ export default function EmailSignInForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className='space-y-2'>
-        <input
-          id='email'
-          name='email'
-          type='email'
-          label='Sign in with your email'
-          placeholder='hello@me.com'
-          autoComplete='email'
-          required
-        />
-      </div>
-      <button
-        type='submit'
-        variant='outline'
-        color='gray'
-        className='mt-3 w-full'
-      >
-        {
-          formStatus === 'processing...' ?
-            <div className={styles.loadingIndicator}>
+    <>
+      <div className={styles.formContainer}>
+        <form
+          onSubmit={handleSubmit}
+          className={styles.form}
+        >
+          <input
+            className={styles.input}
+            id='email'
+            name='email'
+            type='email'
+            label='Sign in with your email'
+            placeholder='hello@me.com'
+            autoComplete='email'
+            required
+          />
+          <button
+            className={styles.button}
+            type='submit'
+            variant='outline'
+            color='gray'
+          >
+            {
+              formStatus === 'processing...' ?
+                <div className={styles.loadingIndicator}>
+                  <GearSVG />
+                </div>
+                :
+                'SIGN IN'
+            }
+
+            {/* <div className={styles.loadingIndicator}>
               <GearSVG />
-            </div>
-            :
-            'SIGN IN'
-        }
-      </button>
-    </form>
+            </div> */}
+          </button>
+        </form>
+      </div>
+
+      <Link
+        href={'/'}
+        className={styles.link}
+      >
+        Return to Home Page
+      </Link>
+    </>
   )
 }

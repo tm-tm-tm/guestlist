@@ -3,6 +3,7 @@ import { SessionProvider } from "next-auth/react"
 import '@/styles/globals.css'
 import Login from '@/components/Login/Login'
 import ColumnLayout from '@/components/Layouts/ColumnLayout'
+import HalfPageLayout from '@/components/Layouts/HalfLayout/HalfPageLayout'
 
 export default function App({
   Component,
@@ -13,14 +14,16 @@ export default function App({
   return (
     <>
       <SessionProvider session={session}>
-        <ColumnLayout>
-          <Login />
-          <Component
-            {...pageProps}
-          // key={router.asPath}
-          />
-          <Analytics />
-        </ColumnLayout>
+        {/* <ColumnLayout> */}
+        {/* <HalfPageLayout> */}
+        <Login />
+        <Component
+          {...pageProps}
+        // key={router.asPath}
+        />
+        <Analytics />
+        {/* </HalfPageLayout> */}
+        {/* </ColumnLayout> */}
       </SessionProvider>
     </>
   )
