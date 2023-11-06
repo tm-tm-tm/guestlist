@@ -317,12 +317,12 @@ export default function Guestlist() {
                                 <th className={styles.heading}>#</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
-                                <th>Instagram</th>
-                                <th>Email</th>
-                                <th>Added</th>
-                                <th>Updated</th>
+                                {/* <th>Instagram</th> */}
+                                <th className={styles.emailColumn}>Email</th>
+                                <th className={styles.addedColumn}>Added</th>
+                                <th className={styles.updatedColumn}>Updated</th>
                                 {/* <th>Access</th> */}
-                                <th>Access</th>
+                                <th className={styles.accessColumn}>Access</th>
                                 {/* <th>QR</th> */}
                                 <th></th>
                             </tr>
@@ -350,16 +350,16 @@ export default function Guestlist() {
                                         <td>
                                             {guest.lastName}
                                         </td>
-                                        <td>
+                                        {/* <td>
                                             {guest.instagram}
-                                        </td>
-                                        <td>
+                                        </td> */}
+                                        <td className={styles.emailColumn}>
                                             {guest.email}
                                         </td>
-                                        <td>
+                                        <td className={styles.addedColumn}>
                                             {guest.timestamp}
                                         </td>
-                                        <td>
+                                        <td className={styles.updatedColumn}>
                                             {guest.updatedAt}
                                         </td>
                                         {/* <td>

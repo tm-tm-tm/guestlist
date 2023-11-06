@@ -35,10 +35,10 @@
     /* Span three columns for the bottom column */
     background-color: #f8f8f8;
     margin: 0.2em;
-    padding-bottom: 0.2em; /* Add padding to the bottom of the column */
+    padding-bottom: 0.2em;
+    /* Add padding to the bottom of the column */
     box-sizing: border-box;
 }
-
 
 .inputPanel {
     display: flex;
@@ -50,12 +50,14 @@
 .adminHeading {
     background: rgba(0, 0, 0, 0.9);
     border: 0.2px solid rgba(192, 192, 192, 0.5);
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px; 
-    backdrop-filter: blur(10px);    margin: 0.2em;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
+    backdrop-filter: blur(10px);
+    margin: 0.2em;
     margin-bottom: 0;
     padding: 0.4em;
     box-sizing: border-box;
     border-radius: 0.1em;
+    font-size: 24px;
     font-weight: 500;
 }
 
@@ -129,7 +131,7 @@
     padding: 8px;
     /* Adjust to control row height */
     margin: 0;
-    line-height: 1.2;
+    line-height: 1;
     /* Adjust to control text spacing */
     text-align: left;
 }
@@ -239,24 +241,41 @@
         justify-content: space-between;
         height: auto;
     }
+
     .adminHeading {
-        height: 2em;
+        height: 48px;
+    }
+}
+
+@media (max-width: 800px) {
+    .emailColumn {
+        max-width: 120px;
+        overflow: scroll;
+    }
+    .accessColumn {
+        max-width: 14px;
+        text-align: center;
+    }
+    .addedColumn,
+    .updatedColumn {
+        display: none;
     }
 }
 
 /* Media query for a max-width of 450px */
 @media (max-width: 450px) {
+    .table {
+        font-size: 12px;
+    }
     .container {
         grid-template-columns: 1fr;
         /* One column for the top row */
         display: flex;
         flex-direction: column;
-        width: 100dvw;
     }
 
     .columnTop {
         grid-column: 1;
     }
 
-  
 }

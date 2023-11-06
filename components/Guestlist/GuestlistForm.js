@@ -7,7 +7,7 @@ export default function GuestlistForm() {
     const { data: session } = useSession()
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
-    const [instagram, setInstagram] = useState('')
+    // const [instagram, setInstagram] = useState('')
     const [email, setEmail] = useState('')
     const [formStatus, setFormStatus] = useState(null)
     const [error, setError] = useState('')
@@ -17,7 +17,7 @@ export default function GuestlistForm() {
         setFormStatus('processing...')
         console.log(formStatus)
 
-        const body = { firstName, lastName, instagram, email }
+        const body = { firstName, lastName, email }
         const response = await fetch('/api/guestlist/guestlist', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -38,24 +38,24 @@ export default function GuestlistForm() {
         console.log('form submitted successfully.')
     }
 
-    const handleInstagramEntry = (e) => {
-        const validInstagramHandleRegex = /^[@]?[a-zA-Z0-9._]*$/
-        const inputValue = e.target.value;
-        if (validInstagramHandleRegex.test(inputValue)) {
-            let value = inputValue;
-            if (value && !value.startsWith('@')) {
-                value = '@' + value;
-            }
-            setInstagram(value);
-        } else {
-            setFormStatus('error');
-        }
-    }
+    // const handleInstagramEntry = (e) => {
+    //     const validInstagramHandleRegex = /^[@]?[a-zA-Z0-9._]*$/
+    //     const inputValue = e.target.value;
+    //     if (validInstagramHandleRegex.test(inputValue)) {
+    //         let value = inputValue;
+    //         if (value && !value.startsWith('@')) {
+    //             value = '@' + value;
+    //         }
+    //         setInstagram(value);
+    //     } else {
+    //         setFormStatus('error');
+    //     }
+    // }
 
     const resetForm = () => {
         setFirstName('')
         setLastName('')
-        setInstagram('')
+        // setInstagram('')
         setEmail('')
     }
 
@@ -130,7 +130,7 @@ export default function GuestlistForm() {
                                     />
                                 </div>
 
-                                <div className={styles.inputContainer}>
+                                {/* <div className={styles.inputContainer}>
                                     <label className={styles.label}>
                                         Instagram
                                     </label>
@@ -146,7 +146,7 @@ export default function GuestlistForm() {
                                         // onChange={(e) => setInstagram(e.target.value)}
                                         onChange={handleInstagramEntry}
                                     />
-                                </div>
+                                </div> */}
 
                                 <div className={styles.inputContainer}>
                                     <label className={styles.label}>

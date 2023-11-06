@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import styles from './Card.module.css'
 import GuestlistForm from '../Guestlist/GuestlistForm'
 import LockSVG from '@/assets/svg/LockSVG'
+import CloseSVG from '@/assets/svg/CloseSVG'
 
 const Card = ({ children }) => {
     const { data: session } = useSession()
@@ -44,7 +45,14 @@ const Card = ({ children }) => {
                                     className={styles.formTitle}
                                     onClick={(e) => setIsOpen(!isOpen)}
                                 >
-                                    RSVP
+                                    {
+                                        isOpen ?
+                                            <>
+                                                <CloseSVG />
+                                            </>
+                                            :
+                                            <p>RSVP</p>
+                                    }
                                 </div>
                                 <div
                                     className={isOpen === true ? styles.formReveal : styles.formHidden}
@@ -60,7 +68,7 @@ const Card = ({ children }) => {
                                     type="button"
                                     disabled
                                 >
-                                    <LockSVG/>
+                                    <LockSVG />
                                 </button>
                             </div>
                         )
