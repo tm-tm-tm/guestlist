@@ -9,17 +9,16 @@ import HalfPageLayout from '@/components/Layouts/HalfLayout/HalfPageLayout'
 export default function Home() {
   return (
     <>
-      <HalfPageLayout>
-        <main className={styles.main}>
-          <div className={styles.imageContainer}>
-            <div className={styles.image}>
+        <HalfPageLayout>
+          <main className={styles.main}>
+            <div className={styles.imageContainer}>
+              <div className={styles.image}>
 
+              </div>
             </div>
-          </div>
-          <GuestlistForm />
-        </main>
-      </HalfPageLayout>
-
+            <GuestlistForm />
+          </main>
+        </HalfPageLayout>
     </>
   )
 }

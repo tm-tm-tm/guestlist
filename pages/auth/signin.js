@@ -1,16 +1,14 @@
-import React from 'react'
+import Link from 'next/link'
 import { getProviders, signIn } from "next-auth/react"
 import EmailSignInForm from '@/components/SignInForm/SignInForm'
-import Link from 'next/link'
 import HalfPageLayout from '@/components/Layouts/HalfLayout/HalfPageLayout'
 
 export default function SignIn({ providers }) {
     return (
         <>
-
-            <HalfPageLayout>
-                <EmailSignInForm />
-            </HalfPageLayout>
+                <HalfPageLayout>
+                    <EmailSignInForm />
+                </HalfPageLayout>
 
             {/* {Object.values(providers).map((provider) => (
                 <div key={provider.name}>

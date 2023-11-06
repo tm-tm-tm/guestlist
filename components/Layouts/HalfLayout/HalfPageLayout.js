@@ -2,22 +2,26 @@ import { useRef } from 'react'
 import { motion } from "framer-motion"
 import Image from 'next/image'
 import styles from './HalfPageLayout.module.css'
+import PageTransition from '@/components/PageTransition/PageTransition'
 
 const HalfPageLayout = ({ children }) => {
 
   return (
     <>
-      <div className={styles.container}>
-        <div className={styles.leftHalf}>
-          
-        </div>
+      <PageTransition>
+        <div className={styles.container}>
+          <div className={styles.leftHalf}>
 
-        <div className={styles.rightHalf} >
-          <div className={styles.innerContainer} >
-            {children}
+          </div>
+
+          <div className={styles.rightHalf} >
+            <div className={styles.innerContainer} >
+              {children}
+            </div>
           </div>
         </div>
-      </div>
+      </PageTransition>
+
     </>
   )
 }

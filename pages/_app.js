@@ -4,6 +4,7 @@ import '@/styles/globals.css'
 import Login from '@/components/Login/Login'
 import ColumnLayout from '@/components/Layouts/ColumnLayout'
 import HalfPageLayout from '@/components/Layouts/HalfLayout/HalfPageLayout'
+import PageTransition from '@/components/PageTransition/PageTransition'
 
 export default function App({
   Component,

@@ -5,23 +5,23 @@ import styles from '@/components/SignInForm/SignInForm.module.css'
 const VerificationPage = () => {
     return (
         <>
-            <HalfPageLayout>
-                <div className={styles.formContainer}>
-                    <div>
-                        Check Your Email
+                <HalfPageLayout>
+                    <div className={styles.formContainer}>
+                        <div>
+                            Check Your Email
+                        </div>
+                        <div>
+                            A sign-in link has been sent to your email address
+                        </div>
                     </div>
-                    <div>
-                        A sign-in link has been sent to your email address
-                    </div>
-                </div>
 
-                <Link
-                    href={'/'}
-                    className={styles.link}
-                >
-                    Return to Home Page
-                </Link>
-            </HalfPageLayout>
+                    <Link
+                        href={'/'}
+                        className={styles.link}
+                    >
+                        Return to Home Page
+                    </Link>
+                </HalfPageLayout>
         </>
     )
 }

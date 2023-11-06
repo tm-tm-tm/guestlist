@@ -5,23 +5,23 @@ import styles from '@/components/SignInForm/SignInForm.module.css'
 const ErrorPage = () => {
     return (
         <>
-            <HalfPageLayout>
-                <div className={styles.formContainer}>
-                    <div>
-                        Error
+                <HalfPageLayout>
+                    <div className={styles.formContainer}>
+                        <div>
+                            Error
+                        </div>
+                        <div>
+                            Please try again.
+                        </div>
                     </div>
-                    <div>
-                        Please try again.
-                    </div>
-                </div>
 
-                <Link
-                    href={'/auth/signin'}
-                    className={styles.link}
-                >
-                    Return to Sign-In Page
-                </Link>
-            </HalfPageLayout>
+                    <Link
+                        href={'/auth/signin'}
+                        className={styles.link}
+                    >
+                        Return to Sign-In Page
+                    </Link>
+                </HalfPageLayout>
         </>
     )
 }
