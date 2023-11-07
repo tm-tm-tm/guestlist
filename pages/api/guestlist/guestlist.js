@@ -127,23 +127,55 @@ const readGuestlist = async (req, res) => {
 
 const addGuest = async (req, res) => {
   const body = req.body
+  const email = body.email
+
+  // Check if the email already exists in the database
+  const existingGuest = await prisma.guestlist.findFirst({
+    where: { email: email },
+  })
+
+  if (existingGuest) {
+    return res.status(400).json({ message: 'Email already exists', success: false })
+  }
+
+  const data = {
+    firstName: body.firstName,
+    lastName: body.lastName,
+    email: email,
+    userId: body.userId,
+  }
 
   try {
     const newEntry = await prisma.guestlist.create({
-      data: {
-        firstName: body.firstName,
-        lastName: body.lastName,
-        email: body.email,
-        userId: body.userId
-      },
+      data: data,
     })
 
-    return res.status(200).json({ success: true, data: newEntry })
+    res.status(200).json({ success: true, data: newEntry })
   } catch (error) {
     console.error('Request error', error)
-    return res.status(500).json({ error: 'Error adding guest', success: false })
+    res.status(500).json({ error: 'Error adding guest', success: false })
   }
 }
+
+// const addGuest = async (req, res) => {
+//   const body = req.body
+
+//   try {
+//     const newEntry = await prisma.guestlist.create({
+//       data: {
+//         firstName: body.firstName,
+//         lastName: body.lastName,
+//         email: body.email,
+//         userId: body.userId
+//       },
+//     })
+
+//     return res.status(200).json({ success: true, data: newEntry })
+//   } catch (error) {
+//     console.error('Request error', error)
+//     return res.status(500).json({ error: 'Error adding guest', success: false })
+//   }
+// }
 
 const deleteGuest = async (req, res) => {
   const { id } = req.body;

@@ -12,6 +12,48 @@ export default function GuestlistForm() {
     const [formStatus, setFormStatus] = useState(null)
     const [error, setError] = useState('')
 
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     setFormStatus('processing...')
+
+    //     if (status === 'authenticated') {
+    //         const body = {
+    //             firstName,
+    //             lastName,
+    //             email,
+    //             userId: session.user.id
+    //         }
+
+    //         fetch('/api/guestlist/guestlist', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(body),
+    //         })
+    //             .then((response) => {
+    //                 if (response.ok) {
+    //                     // Guestlist entry added successfully
+    //                     console.log('Guestlist entry added successfully')
+    //                     setFormStatus('success')
+    //                     resetForm()
+    //                 } else {
+    //                     // Handle the error if needed
+    //                     console.error('Failed to add guestlist entry')
+    //                     setFormStatus('error')
+    //                     resetForm()
+    //                 }
+    //             })
+    //             .catch((error) => {
+    //                 // Handle fetch or other errors
+    //                 console.error('Error while adding guestlist entry:', error)
+    //             })
+    //     } else {
+    //         // Handle the case when the user is not authenticated
+    //         console.error('User is not authenticated. Please sign in.')
+    //     }
+    // }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setFormStatus('processing...')
@@ -21,7 +63,7 @@ export default function GuestlistForm() {
                 firstName,
                 lastName,
                 email,
-                userId: session.user.id
+                userId: session.user.id,
             }
 
             fetch('/api/guestlist/guestlist', {
@@ -38,21 +80,31 @@ export default function GuestlistForm() {
                         setFormStatus('success')
                         resetForm()
                     } else {
-                        // Handle the error if needed
-                        console.error('Failed to add guestlist entry')
-                        setFormStatus('error')
-                        resetForm()
+                        response.json().then((data) => {
+                            if (response.status === 400 && data.message === 'Email already exists') {
+                                // Handle the case when the email already exists
+                                console.error('Email already added')
+                                setFormStatus('Email Already Added')
+                            } else {
+                                // Handle other errors
+                                console.error('Failed to add guestlist entry')
+                                setFormStatus('error')
+                            }
+                        })
                     }
                 })
                 .catch((error) => {
                     // Handle fetch or other errors
                     console.error('Error while adding guestlist entry:', error)
+                    setFormStatus('error')
                 })
         } else {
             // Handle the case when the user is not authenticated
             console.error('User is not authenticated. Please sign in.')
+            setFormStatus('error')
         }
     }
+
 
     // const handleSubmit = async (e) => {
     //     e.preventDefault()
@@ -103,33 +155,8 @@ export default function GuestlistForm() {
 
     return (
         <>
-            {/* {
-                session ?
-                    <div
-                        className={styles.formTitle}
-                        onClick={(e) => setIsOpen(!isOpen)}
-                    >
-                        RSVP
-                    </div>
-                    :
-                    <div className={styles.buttonContainer}>
-                        <button
-                            className={styles.lockedButton}
-                            data-tooltip={'SIGN IN FOR ACCESS'}
-                            type="button"
-                            disabled
-                        >
-                            LOCKED
-                        </button>
-                    </div>
-
-            } */}
-
             {
                 session ?
-                    // <div
-                    //     className={isOpen === true ? styles.formReveal : styles.formHidden}
-                    // >
                     <div className={styles.outerContainer}>
                         <div className={styles.innerContainer}>
                             <form
@@ -225,6 +252,11 @@ export default function GuestlistForm() {
                                             You have been added to the guestlist. Thank you.
                                         </div>
                                     )}
+                                    {formStatus === 'Email Already Added' && (
+                                        <div className={styles.statusMessage}>
+                                            You're already on the list. Please try a different email.
+                                        </div>
+                                    )}
                                     {formStatus === 'error' && (
                                         <div className={styles.statusMessage}>
                                             Please try again.
@@ -235,7 +267,6 @@ export default function GuestlistForm() {
                             </form>
                         </div>
                     </div>
-                    // </div>
                     :
                     ''
             }
