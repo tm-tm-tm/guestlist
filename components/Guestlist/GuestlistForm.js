@@ -4,7 +4,7 @@ import GearSVG from '../../assets/svg/GearSVG'
 import styles from "./GuestlistForm.module.css"
 
 export default function GuestlistForm() {
-    const { data: session } = useSession()
+    const { data: session, status } = useSession()
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     // const [instagram, setInstagram] = useState('')
@@ -12,31 +12,73 @@ export default function GuestlistForm() {
     const [formStatus, setFormStatus] = useState(null)
     const [error, setError] = useState('')
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+    const handleSubmit = (e) => {
+        e.preventDefault();
         setFormStatus('processing...')
-        console.log(formStatus)
 
-        const body = { firstName, lastName, email }
-        const response = await fetch('/api/guestlist/guestlist', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body)
-        })
+        if (status === 'authenticated') {
+            const body = {
+                firstName,
+                lastName,
+                email,
+                userId: session.user.id
+            }
 
-        const { error } = await response.json();
-        if (error) {
-            resetForm()
-            setFormStatus('error')
-            return
+            fetch('/api/guestlist/guestlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        // Guestlist entry added successfully
+                        console.log('Guestlist entry added successfully')
+                        setFormStatus('success')
+                        resetForm()
+                    } else {
+                        // Handle the error if needed
+                        console.error('Failed to add guestlist entry')
+                        setFormStatus('error')
+                        resetForm()
+                    }
+                })
+                .catch((error) => {
+                    // Handle fetch or other errors
+                    console.error('Error while adding guestlist entry:', error)
+                })
+        } else {
+            // Handle the case when the user is not authenticated
+            console.error('User is not authenticated. Please sign in.')
         }
-
-        resetForm()
-        setFormStatus('success')
-        // updateGuestlist();
-        // setIsOpen(false)
-        console.log('form submitted successfully.')
     }
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault()
+    //     setFormStatus('processing...')
+    //     console.log(formStatus)
+
+    //     const body = { firstName, lastName, email }
+    //     const response = await fetch('/api/guestlist/guestlist', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(body)
+    //     })
+
+    //     const { error } = await response.json();
+    //     if (error) {
+    //         resetForm()
+    //         setFormStatus('error')
+    //         return
+    //     }
+
+    //     resetForm()
+    //     setFormStatus('success')
+    //     // updateGuestlist();
+    //     // setIsOpen(false)
+    //     console.log('form submitted successfully.')
+    // }
 
     // const handleInstagramEntry = (e) => {
     //     const validInstagramHandleRegex = /^[@]?[a-zA-Z0-9._]*$/

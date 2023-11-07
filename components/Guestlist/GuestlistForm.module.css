@@ -173,7 +173,7 @@
     height: 28px;
     border-radius: 0.2em;
     text-decoration: none;
-    padding-left: 148px;
+    padding-left: 128px;
     border: none;
     box-sizing: border-box;
     color: rgba(0, 0, 0, 0.9);
@@ -188,7 +188,7 @@
 
 .label {
     position: absolute;
-    width: 140px;
+    width: 120px;
     height: 28px;
     margin: 0;
     z-index: 1;

@@ -148,7 +148,7 @@
     padding: 8px;
     /* Adjust to control row height */
     margin: 0;
-    line-height: 1;
+    line-height: 0.8;
     /* Adjust to control text spacing */
     text-align: left;
 }
@@ -180,13 +180,13 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    border: 2px solid #616161;
+    border: 1px solid #616161;
     /* Change to your desired color */
     border-radius: 0.2em;
     /* Adjust the radius to round the checkbox */
-    width: 16px;
+    width: 12px;
     /* Adjust the size of the checkbox */
-    height: 16px;
+    height: 12px;
     /* Adjust the size of the checkbox */
     position: relative;
     padding: 0.8em;
@@ -216,8 +216,8 @@
 
 
 .deleteButton {
-    width: 2em;
-    height: 2em;
+    width: 1.8em;
+    height: 1.8em;
     background: black;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
     border: none;

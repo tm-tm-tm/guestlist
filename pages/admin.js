@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import Guestlist from '@/components/Guestlist/Guestlist'
 import PageTransition from '@/components/PageTransition/PageTransition'

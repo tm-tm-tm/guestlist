@@ -3,7 +3,6 @@
 
 import prisma from '@/lib/prisma.js'
 import { getSession } from "next-auth/react"
-import Guestlist from '@/components/Guestlist/Guestlist.js'
 
 // export default async function handler(req, res) {
 //   if (req.method === 'POST') {
@@ -101,30 +100,49 @@ const readGuestlist = async (req, res) => {
 //     })
 // }
 
-const addGuest = async (req, res, session) => {
+// const addGuest = async (req, res, session) => {
+//   const body = req.body;
+
+//   const data = {
+//     firstName: body.firstName,
+//     lastName: body.lastName,
+//     email: body.email,
+//   };
+
+//   if (session) {
+//     data.userId = session.user.id;
+//   }
+
+//   try {
+//     const newEntry = await prisma.guestlist.create({
+//       data: data,
+//     });
+
+//     res.status(200).json({ success: true, data: newEntry });
+//   } catch (error) {
+//     console.error('Request error', error);
+//     res.status(500).json({ error: 'Error adding guest', success: false });
+//   }
+// }
+
+const addGuest = async (req, res) => {
   const body = req.body
 
-  const data = {
-    firstName: body.firstName,
-    lastName: body.lastName,
-    instagram: body.instagram,
-    email: body.email
-  }
-
-  if (session) {
-    data.userId = session.user.id
-  }
-
-  return prisma.guestlist.create({
-    data: data
-  })
-    .then(newEntry => {
-      return res.status(200).json(newEntry, { success: true })
+  try {
+    const newEntry = await prisma.guestlist.create({
+      data: {
+        firstName: body.firstName,
+        lastName: body.lastName,
+        email: body.email,
+        userId: body.userId
+      },
     })
-    .catch(error => {
-      console.error('Request error', error)
-      return res.status(500).json({ error: 'Error adding guest', success: false })
-    })
+
+    return res.status(200).json({ success: true, data: newEntry })
+  } catch (error) {
+    console.error('Request error', error)
+    return res.status(500).json({ error: 'Error adding guest', success: false })
+  }
 }
 
 const deleteGuest = async (req, res) => {
@@ -187,25 +205,25 @@ const readInstagram = async (req, res) => {
 const updateUsername = async (req, res) => {
   const session = await getSession({ req })
 
-    if (!session) {
-        return res.status(401).end('Not authenticated')
+  if (!session) {
+    return res.status(401).end('Not authenticated')
+  }
+
+  if (req.method === 'POST') {
+    const { newUsername } = req.body
+
+    // Update the username in your database using a query
+    try {
+      await prisma.user.update({
+        where: { id: session.user.id },
+        data: { username: newUsername },
+      })
+
+      res.status(200).end('Username updated successfully')
+    } catch (error) {
+      res.status(500).end('Error updating username')
     }
-
-    if (req.method === 'POST') {
-        const { newUsername } = req.body
-
-        // Update the username in your database using a query
-        try {
-            await prisma.user.update({
-                where: { id: session.user.id },
-                data: { username: newUsername },
-            })
-
-            res.status(200).end('Username updated successfully')
-        } catch (error) {
-            res.status(500).end('Error updating username')
-        }
-    } else {
-        res.status(405).end('Method not allowed')
-    }
+  } else {
+    res.status(405).end('Method not allowed')
+  }
 }

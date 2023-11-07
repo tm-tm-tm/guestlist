@@ -23,17 +23,6 @@ export default function Guestlist() {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredGuests, setFilteredGuests] = useState([]);
 
-    // useEffect(() => {
-    //     console.log("Guests:", guests)
-    //     console.log("id:", id)
-    //     console.log("firstName:", firstName)
-    //     console.log("lastName:", lastName)
-    //     console.log("instagram:", instagram)
-    //     console.log("timestamp:", timestamp)
-    //     console.log("access:", access)
-    //     console.log("userId:", userId)
-    // }, [id, firstName, lastName, instagram, timestamp, access, guests, userId])
-
     useEffect(() => {
         readGuestlist()
     }, [access])
@@ -237,7 +226,6 @@ export default function Guestlist() {
         <>
             <div className={styles.container}>
                 <div className={styles.columnTop}>
-
                     <div className={styles.inputPanel}>
                         <h1 className={styles.adminHeading}>
                             ADMIN
@@ -256,79 +244,6 @@ export default function Guestlist() {
                             />
                         </div>
                     </div>
-                    {/* <form action="#" method="POST" onSubmit={(e) => handleSubmit(e)}>
-                        <div>
-                            <label>
-                                FIRST NAME
-                            </label>
-                            <input
-                                type="text"
-                                name="first-name"
-                                id="first-name"
-                                value={firstName}
-                                autoComplete="off"
-                                placeholder="Enter your first name."
-                                required
-                                onChange={(e) => setFirstName(e.target.value)}
-                            />
-                        </div>
-
-                        <div>
-                            <label>
-                                LAST NAME
-                            </label>
-                            <input
-                                type="text"
-                                name="last-name"
-                                id="last-name"
-                                value={lastName}
-                                autoComplete="off"
-                                placeholder="Enter your last name."
-                                required
-                                onChange={(e) => setLastName(e.target.value)}
-                            />
-                        </div>
-
-                        <div>
-                            <label>
-                                INSTAGRAM
-                            </label>
-                            <input
-                                type="text"
-                                name="instagram"
-                                id="instagram"
-                                value={instagram}
-                                autoComplete="off"
-                                placeholder="Enter your Instagram handle."
-                                required
-                                // onChange={(e) => setInstagram(e.target.value)}
-                                onChange={handleInstagramEntry}
-                            />
-                        </div>
-
-                        <div>
-                            <label>
-                                EMAIL
-                            </label>
-                            <input
-                                id="email-input"
-                                name="email"
-                                type="email"
-                                placeholder="Enter email address for updates."
-                                required
-                                autoComplete="off"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-
-                        <div>
-                            <button>
-                                SUBMIT
-                            </button>
-                        </div>
-
-                    </form> */}
                 </div>
 
                 <div className={styles.columnTop}>
@@ -398,9 +313,6 @@ export default function Guestlist() {
                                                 onChange={() => updateGuestAccess(guest.id)}
                                                 disabled={loading}
                                             />
-                                            {/* <label>
-                                                Access
-                                            </label> */}
                                         </td>
                                         {/* <td>
                                             {guest.qrCode && <img src={guest.qrCode} alt="QR Code" />}
