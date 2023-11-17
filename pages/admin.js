@@ -1,11 +1,9 @@
-import { useEffect } from 'react'
+import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import Guestlist from '@/components/Guestlist/Guestlist'
 import PageTransition from '@/components/PageTransition/PageTransition'
-import ColumnLayout from '@/components/Layouts/ColumnLayout'
 import HalfPageLayout from '@/components/Layouts/HalfLayout/HalfPageLayout'
 import styles from '@/components/SignInForm/SignInForm.module.css'
-import Link from 'next/link'
 
 export default function Admin() {
     const { data: session, status } = useSession()

@@ -2,12 +2,11 @@
     width: 100%;
     height: 100%;
     display: flex;
-    flex-direction: row;
 }
 
 .leftHalf {
     position: relative;
-    width: 50%;
+    width: 20%;
     height: 100vh;
     background: black;
     box-sizing: border-box;
@@ -15,7 +14,7 @@
 }
 
 .rightHalf {
-    width: 50%;
+    width: 80%;
     height: 100vh;
     background: black;
     display: flex;
@@ -33,32 +32,6 @@
     z-index: 10;
     border-radius: 0.4em;
 }
-
-.card {
-    position: absolute;
-    width: 30em;
-    height: 20em;
-    /* aspect-ratio: 4 / 5; */
-    /* width: max-content;
-    height: max-content; */
-    padding: 0.4em;
-    box-sizing: border-box;
-    border: 1px solid #000;
-    border-radius: 0.4em;
-    background-color: white;
-    cursor: grab;
-    z-index: 0;
-}
-
-.image {
-    /* aspect-ratio: 4 / 5; */
-    /* object-fit: cover; */
-    user-select: none;
-    pointer-events: none;
-    box-sizing: border-box;
-}
-
-
 
 @media (max-width: 900px) {
     .container {

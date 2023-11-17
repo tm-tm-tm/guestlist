@@ -63,9 +63,10 @@ model Guestlist {
   id        Int       @id @default(autoincrement())
   firstName String?
   lastName  String?
-  instagram String?
   email     String?
+  qrCode    String?   @db.Text
   access    Boolean   @default(false)
+  checkedIn Boolean   @default(false)
   timestamp DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   userId    String?

@@ -1,54 +1,23 @@
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import styles from './Guestlist.module.css'
 import GuestlistForm from './GuestlistForm';
 import GuestlistAnalytics from './GuestlistAnalytics'
-
-// const qrcode = require('qrcode');
+const qrcode = require('qrcode');
 
 export default function Guestlist() {
     const [guests, setGuests] = useState([])
-    const [id, setId] = useState('')
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [instagram, setInstagram] = useState('')
-    const [email, setEmail] = useState('')
-    const [timestamp, setTimestamp] = useState('')
-    const [userId, setUserId] = useState('')
     const [access, setAccess] = useState('')
-    // const [qrCodes, setQRCodes] = useState([]);
+    const [checkedIn, setCheckedIn] = useState('');
     const [loading, setLoading] = useState(false)
-    const [status, setStatus] = useState(null)
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredGuests, setFilteredGuests] = useState([]);
+    const [qrCodes, setQRCodes] = useState({});
 
     useEffect(() => {
         readGuestlist()
-    }, [access])
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const body = { firstName, lastName, instagram, email }
-
-        fetch('/api/guestlist/guestlist', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body)
-        })
-            .then((response) => {
-                if (response.status !== 200) {
-                    console.log('something went wrong')
-                } else {
-                    resetForm();
-                    readGuestlist();
-                    console.log('form submitted successfully.')
-                }
-            })
-            .catch((error) => {
-                console.log('there was an error submitting', error)
-            })
-    }
+    }, [access, checkedIn])
 
     const readGuestlist = () => {
         fetch('/api/guestlist/guestlist', {
@@ -67,6 +36,7 @@ export default function Guestlist() {
                     guests.forEach((guest) => {
                         guest.timestamp = formatTimestamp(guest.timestamp)
                         guest.updatedAt = formatTimestamp(guest.updatedAt)
+
                     })
                     setGuests(guests)
                     console.log('successfully returned guestlist.')
@@ -77,97 +47,63 @@ export default function Guestlist() {
             })
     }
 
-    // // QR CODE AS IMAGE
-    // async function generateQRCode(data) {
-    //     try {
-    //         // Customize the QR code content as needed
-    //         const qrCodeValue = `Your QR code content here: ${data}`;
-    //         return new Promise((resolve, reject) => {
-    //             qrcode.toDataURL(qrCodeValue, (error, qrCodeData) => {
-    //                 if (error) {
-    //                     console.error('Error generating QR code:', error);
-    //                     reject(error);
-    //                 } else {
-    //                     resolve(qrCodeData);
-    //                 }
-    //             });
-    //         });
-    //     } catch (error) {
-    //         console.error('Error generating QR code:', error);
-    //         throw error;
-    //     }
-    // }
-
-    // QR CODE AS LINK
-    // async function generateQRCode(data) {
-    //     try {
-    //         // Customize the QR code content as needed
-    //         const qrCodeValue = `Your QR code content here: ${data}`;
-    //         return new Promise((resolve, reject) => {
-    //             qrcode.toDataURL(qrCodeValue, (error, qrCodeDataUrl) => {
-    //                 if (error) {
-    //                     console.error('Error generating QR code:', error);
-    //                     reject(error);
-    //                 } else {
-    //                     resolve(qrCodeDataUrl);
-    //                 }
-    //             });
-    //         });
-    //     } catch (error) {
-    //         console.error('Error generating QR code:', error);
-    //         throw error;
-    //     }
-    // }
-
-    // const readGuestlist = async () => {
-    //     try {
-    //         const res = await fetch('/api/guestlist/guestlist', {
-    //             method: 'GET',
-    //             headers: { 'Content-Type': 'application/json' },
-    //         });
-
-    //         const guests = await res.json();
-
-    //         const qrCodePromises = guests.map(async (guest) => {
-    //             // Generate a QR code for each guest entry (customize the content as needed)
-    //             const qrCodeData = await generateQRCode(guest.id);
-    //             return { ...guest, qrCode: qrCodeData };
-    //         });
-
-    //         const guestsWithQRCodes = await Promise.all(qrCodePromises);
-
-    //         guestsWithQRCodes.forEach((guest) => {
-    //             guest.timestamp = formatTimestamp(guest.timestamp);
-    //             guest.updatedAt = formatTimestamp(guest.updatedAt);
-    //         });
-
-    //         setGuests(guestsWithQRCodes);
-
-    //         if (res.status !== 200) {
-    //             console.log('something went wrong');
-    //         } else {
-    //             console.log('successfully returned guestlist.');
-    //         }
-    //     } catch (error) {
-    //         console.log('error returning guestlist.', error);
-    //     }
-    // };
-
     const updateGuestAccess = async (id) => {
-        setLoading(true)
+        setLoading(true);
 
-        const res = await fetch(`/api/guestlist/guestlist`, {
+        return fetch(`/api/guestlist/guestlist`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id }),
         })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                } else {
+                    console.error('Failed to update guest access status:', res.statusText);
+                    throw new Error('Failed to update guest access status');
+                }
+            })
+            .then(({ access: updatedAccess }) => {
+                setAccess(updatedAccess);
+                return updatedAccess;
+            })
+            .catch((error) => {
+                console.error('Error updating guest access status:', error);
+                throw error;
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
 
-        // const { error } = await res.json()
-        // setStatus(error ? "error" : "success")
+    const updateCheckIn = async (id) => {
+        setLoading(true);
 
-        setAccess(!access)
-        setLoading(false)
-    }
+        return fetch(`/api/guestlist/checkIn`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id }),
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                } else {
+                    console.error('Failed to update guest checked-in status:', res.statusText);
+                    throw new Error('Failed to update guest checked-in status');
+                }
+            })
+            .then(({ checkedIn: updatedCheckIn }) => {
+                setCheckedIn(updatedCheckIn);
+                return updatedCheckIn;
+            })
+            .catch((error) => {
+                console.error('Error updating guest checked-in status:', error);
+                throw error;
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
 
     const deleteGuest = async (id) => {
         setLoading(true)
@@ -180,14 +116,6 @@ export default function Guestlist() {
 
         readGuestlist()
         setLoading(false)
-    }
-
-    const handleInstagramEntry = (e) => {
-        let value = e.target.value
-        if (value && !value.startsWith('@')) {
-            value = '@' + value
-        }
-        setInstagram(value)
     }
 
     const handleSearchInputChange = (e) => {
@@ -211,16 +139,112 @@ export default function Guestlist() {
         return date.toLocaleTimeString('en-US', options)
     }
 
-    const resetForm = () => {
-        setFirstName('')
-        setLastName('')
-        setInstagram('')
-        setEmail('')
-    }
-
     const updateGuestlist = () => {
         readGuestlist()
     }
+
+    // QR CODE AS IMAGE
+    // async function generateQRCode(data) {
+    //     try {
+    //         const qrCodeValue = `Guest: ${data}`;
+    //         console.log('Generating QR code for:', qrCodeValue);
+
+    //         return new Promise((resolve, reject) => {
+    //             qrcode.toDataURL(qrCodeValue, (error, qrCodeData) => {
+    //                 if (error) {
+    //                     console.error('Error generating QR code:', error);
+    //                     reject(error);
+    //                 } else {
+    //                     console.log('QR code generated successfully.');
+    //                     console.log('Generated QR code data:', qrCodeData);
+    //                     resolve(qrCodeData);
+    //                 }
+    //             });
+    //         });
+    //     } catch (error) {
+    //         console.error('Error generating QR code:', error);
+    //         throw error;
+    //     }
+    // }
+
+    const generateQRCode = async (guest) => {
+        try {
+            const qrCodeValue = `${guest.id}`;
+            console.log('Generating QR code for:', qrCodeValue);
+
+            const qrCodeData = await new Promise((resolve, reject) => {
+                qrcode.toDataURL(qrCodeValue, (error, data) => {
+                    if (error) {
+                        console.error('Error generating QR code:', error);
+                        reject(error);
+                    } else {
+                        console.log('QR code generated successfully.');
+                        console.log('Generated QR code data:', data);
+                        resolve(data);
+                    }
+                });
+            });
+
+            await updateQRCodeInDatabase(guest.id, qrCodeData);
+
+            return { ...guest, qrCode: qrCodeData };
+        } catch (error) {
+            console.error('Error generating or saving QR code:', error);
+            throw error;
+        }
+    }
+
+    const updateQRCodeInDatabase = async (guestId, qrCodeData) => {
+        try {
+            const response = await fetch('/api/guestlist/checkIn', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: guestId, qrCodeData }),  // Use guestId as the key
+            });
+
+            if (response.ok) {
+                const updatedGuest = await response.json();
+                console.log('QR code updated in the database successfully:', updatedGuest);
+            } else {
+                const error = await response.json();
+                console.error('Error updating QR code in the database:', error);
+            }
+        } catch (error) {
+            console.error('Error updating QR code in the database:', error);
+        }
+    };
+
+    const updateGuestQrCodes = async () => {
+        try {
+            const res = await fetch('/api/guestlist/guestlist', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            });
+
+            if (res.status !== 200) {
+                console.log('something went wrong');
+                return;
+            }
+
+            const guests = await res.json();
+
+            if (guests) {
+                const guestsWithQRCodes = await Promise.all(guests.map(generateQRCode));
+
+                guestsWithQRCodes.forEach((guest) => {
+                    guest.timestamp = formatTimestamp(guest.timestamp);
+                    guest.updatedAt = formatTimestamp(guest.updatedAt);
+                });
+
+                setGuests(guestsWithQRCodes);
+                console.log('successfully returned guestlist.');
+            }
+        } catch (error) {
+            console.log('error returning guestlist.', error);
+        }
+    };
 
     return (
         <>
@@ -243,6 +267,10 @@ export default function Guestlist() {
                                 className={styles.searchInput}
                             />
                         </div>
+
+                        <button onClick={() => updateGuestQrCodes()}>
+                            UPDATE QR CODES
+                        </button>
                     </div>
                 </div>
 
@@ -250,98 +278,96 @@ export default function Guestlist() {
                     <GuestlistAnalytics guests={guests} access={access} updateGuestlist={updateGuestlist} />
                 </div>
 
+                <Suspense>
+                    <div className={styles.columnBottom}>
+                        <motion.table className={styles.table} >
+                            <thead className={styles.header}>
+                                <tr>
+                                    <th className={styles.heading}>#</th>
+                                    <th className={styles.firstNameColumn}>First Name</th>
+                                    <th className={styles.lastNameColumn}>Last Name</th>
+                                    <th className={styles.emailColumn}>Email</th>
+                                    <th className={styles.addedColumn}>Added</th>
+                                    <th className={styles.updatedColumn}>Updated</th>
+                                    <th className={styles.accessColumn}>Access</th>
+                                    <th>QR</th>
+                                    <th className={styles.accessColumn}>Checked-In</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
 
-                <div className={styles.columnBottom}>
-                    <motion.table className={styles.table} >
-                        <thead className={styles.header}>
-                            <tr>
-                                <th className={styles.heading}>#</th>
-                                <th className={styles.firstNameColumn}>First Name</th>
-                                <th className={styles.lastNameColumn}>Last Name</th>
-                                {/* <th>Instagram</th> */}
-                                <th className={styles.emailColumn}>Email</th>
-                                <th className={styles.addedColumn}>Added</th>
-                                <th className={styles.updatedColumn}>Updated</th>
-                                {/* <th>Access</th> */}
-                                <th className={styles.accessColumn}>Access</th>
-                                {/* <th>QR</th> */}
-                                <th></th>
-                            </tr>
-                        </thead>
+                            <tbody className={styles.body}>
+                                <AnimatePresence >
+                                    {guestData?.map((guest) => (
+                                        <motion.tr
+                                            key={guest.id}
+                                            layout
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ opacity: 0 }}
+                                            transition={{
+                                                layout: { duration: 0.2 },
+                                            }}
+                                        >
+                                            <td className={styles.rows}>
+                                                {guest.id}
+                                            </td>
+                                            <td className={styles.firstNameColumn}>
+                                                {guest.firstName}
+                                            </td>
+                                            <td className={styles.lastNameColumn}>
+                                                {guest.lastName}
+                                            </td>
 
-                        <tbody className={styles.body}>
-                            <AnimatePresence >
-                                {guestData?.map((guest) => (
-                                    <motion.tr
-                                        key={guest.id}
-                                        layout
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{
-                                            layout: { duration: 0.2 },
-                                        }}
-                                    >
-                                        <td className={styles.rows}>
-                                            {guest.id}
-                                        </td>
-                                        <td className={styles.firstNameColumn}>
-                                            {guest.firstName}
-                                        </td>
-                                        <td className={styles.lastNameColumn}>
-                                            {guest.lastName}
-                                        </td>
-                                        {/* <td>
-                                            {guest.instagram}
-                                        </td> */}
-                                        <td className={styles.emailColumn}>
-                                            {guest.email}
-                                        </td>
-                                        <td className={styles.addedColumn}>
-                                            {guest.timestamp}
-                                        </td>
-                                        <td className={styles.updatedColumn}>
-                                            {guest.updatedAt}
-                                        </td>
-                                        {/* <td>
-                                            {guest.access.toString()}
-                                        </td> */}
-                                        <td>
-                                            <input
-                                                type="checkbox"
-                                                checked={guest.access}
-                                                onChange={() => updateGuestAccess(guest.id)}
-                                                disabled={loading}
-                                            />
-                                        </td>
-                                        {/* <td>
-                                            {guest.qrCode && <img src={guest.qrCode} alt="QR Code" />}
-                                            {guest.qrCode && (
-                                                <a
-                                                    href={guest.qrCode}
-                                                    download={`qr_code_${guest.id}.png`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
+                                            <td className={styles.emailColumn}>
+                                                {guest.email}
+                                            </td>
+                                            <td className={styles.addedColumn}>
+                                                {guest.timestamp}
+                                            </td>
+                                            <td className={styles.updatedColumn}>
+                                                {guest.updatedAt}
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={guest.access}
+                                                    onChange={() => updateGuestAccess(guest.id)}
+                                                    disabled={loading}
+                                                />
+                                            </td>
+                                            <td>
+                                                {guest.qrCode &&
+                                                    <img
+                                                        src={guest.qrCode}
+                                                        alt="QR Code"
+                                                    />
+                                                }
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={guest.checkedIn}
+                                                    onChange={() => updateCheckIn(guest.id)}
+                                                    disabled={loading}
+                                                />
+                                            </td>
+                                            <td>
+                                                <button
+                                                    onClick={() => deleteGuest(guest.id)}
+                                                    disabled={loading}
+                                                    className={styles.deleteButton}
                                                 >
-                                                    Download QR Code
-                                                </a>
-                                            )}
-                                        </td> */}
-                                        <td>
-                                            <button
-                                                onClick={() => deleteGuest(guest.id)}
-                                                disabled={loading}
-                                                className={styles.deleteButton}
-                                            >
-                                                x
-                                            </button>
-                                        </td>
-                                    </motion.tr>
-                                ))}
-                            </AnimatePresence>
-                        </tbody>
-                    </motion.table>
-                </div>
+                                                    x
+                                                </button>
+                                            </td>
+                                        </motion.tr>
+                                    ))}
+                                </AnimatePresence>
+                            </tbody>
+                        </motion.table>
+                    </div>
+                </Suspense>
             </div>
 
             <div>

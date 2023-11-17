@@ -1,0 +1,54 @@
+.timeline {
+  position: relative;
+  margin: 24px;
+  box-sizing: border-box;
+  padding: 2em;
+  border-radius: 0.4em;
+  font-size: 14px;
+  letter-spacing: -0.6px;
+  color: rgb(161, 161, 161);
+  background: rgba(192, 192, 192, 0.2);
+  border: 0.2px solid rgba(192, 192, 192, 0.5);
+  backdrop-filter: blur(20px);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
+  user-select: none;
+}
+
+.performance {
+  position: relative;
+  padding: 10px 0;
+}
+
+.heading {
+  font-size: 16px;
+  letter-spacing: -1px;
+  margin: 0;
+  padding: 0.6em 0;
+  color: black;
+}
+
+.timeRange {
+  display: flex;
+  justify-content: space-between;
+}
+
+.artistName {
+  color: #333;
+}
+
+.duration {
+  font-style: italic;
+}
+
+@media (max-width: 900px) {
+  .timeline {
+    margin: 12px;
+    padding: 1em 1.4em;
+  }
+
+  .performance {
+    padding: 0.4em 0;
+    display: flex;
+    justify-content: space-between;
+  }
+}
