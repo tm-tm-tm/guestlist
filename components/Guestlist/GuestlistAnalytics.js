@@ -2,16 +2,18 @@ import { useEffect, useState } from 'react';
 import styles from "./GuestlistAnalytics.module.css"
 import RefreshSVG from '@/assets/svg/RefreshSVG';
 
-const GuestlistAnalytics = ({ guests, acces, updateGuestlist }) => {
+const GuestlistAnalytics = ({ guests, updateGuestlist }) => {
     // Initialize the capacity state from localStorage or default to 200
     const savedCapacity = localStorage.getItem('eventCapacity')
     const [capacity, setCapacity] = useState(savedCapacity ? parseInt(savedCapacity, 10) : 200)
 
     const totalGuests = guests.length
-    const guestsWithAccess = guests.filter((guest) => guest.access === true)
-    const guestsWithoutAccess = guests.filter((guest) => guest.access === false)
-    const percentageOfCapacityUsed = (guestsWithAccess.length / capacity) * 100
-    const percentageOfCapacityAvailable = ((capacity - guestsWithAccess.length) / capacity) * 100
+    const guestsWithAccess = guests.filter((guest) => guest.access === true).length
+    const guestsWithoutAccess = guests.filter((guest) => guest.access === false).length
+    const percentageOfCapacityUsed = (guestsWithAccess / capacity) * 100
+    const percentageOfCapacityAvailable = ((capacity - guestsWithAccess) / capacity) * 100
+    const guestsCheckedIn = guests.filter((guest) => guest.checkedIn === true).length;
+    const percentageOfGuestsCheckedIn = (guestsCheckedIn / guestsWithAccess) * 100
 
     const handleCapacityChange = (e) => {
         setCapacity(parseInt(e.target.value))
@@ -55,7 +57,7 @@ const GuestlistAnalytics = ({ guests, acces, updateGuestlist }) => {
                             Access Granted
                         </span>
                         <span className={styles.value}>
-                            {guestsWithAccess.length}
+                            {guestsWithAccess}
                         </span>
                     </p>
                     <p className={styles.statistics}>
@@ -63,7 +65,15 @@ const GuestlistAnalytics = ({ guests, acces, updateGuestlist }) => {
                             Waitlist
                         </span>
                         <span className={styles.value}>
-                            {guestsWithoutAccess.length}
+                            {guestsWithoutAccess}
+                        </span>
+                    </p>
+                    <p className={styles.statistics}>
+                        <span className={styles.label}>
+                            Checked In
+                        </span>
+                        <span className={styles.value}>
+                            {guestsCheckedIn}
                         </span>
                     </p>
                 </div>
@@ -104,12 +114,21 @@ const GuestlistAnalytics = ({ guests, acces, updateGuestlist }) => {
                             {percentageOfCapacityAvailable.toFixed(2)}%
                         </span>
                     </p>
+
+                    <p className={styles.statistics}>
+                        <span className={styles.label}>
+                            Checked-In:
+                        </span>
+                        <span className={styles.value}>
+                            {percentageOfGuestsCheckedIn.toFixed(2)}%
+                        </span>
+                    </p>
                 </div>
 
                 <div>
                     <p className={styles.capacityIndicator}>
                         <span className={styles.capacityValue}>
-                            {guestsWithAccess.length} / {capacity}
+                            {guestsWithAccess} / {capacity}
                         </span>
                     </p>
 

@@ -214,6 +214,47 @@
     position: absolute;
 }
 
+.qrCode {
+    width: 60px;
+    height: auto;
+}
+
+.updateQrButton {
+    height: 2em;
+    margin: 0.4em;
+    height: 28px;
+    border: 2px solid silver;
+    border-radius: 0.2em;
+    color: rgb(0, 0, 0);
+    background: rgba(192, 192, 192, 0.2);
+    border: 0.2px solid rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
+}
+
+.updateQrButton:hover {
+    color: rgba(0, 0, 0, 0.8);
+    background: rgba(192, 192, 192, 0.9);
+    border: 0.2px solid rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
+    transition: all 0.4s ease;
+}
+
+.updateQrButton:active {
+    color: rgb(0, 0, 0);
+    background: rgba(192, 192, 192, 0.2);
+    border: 0.2px solid rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
+}
+
+.updateQrButton:disabled {
+    color: rgb(175, 175, 175);
+    background-color: hsla(0, 0%, 20%, 0.609);
+    border-color: hsla(0, 0%, 75%, 0.61);
+    cursor: not-allowed;
+}
 
 .deleteButton {
     width: 1.8em;
@@ -283,7 +324,11 @@
     }
 
     .addedColumn,
-    .updatedColumn {
+    .updatedColumn,
+    .qrColumn,
+    .qrCode,
+    .checkedInColumn,
+    .checkedIn {
         display: none;
     }
 }

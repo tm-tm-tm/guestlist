@@ -8,7 +8,7 @@ const qrcode = require('qrcode');
 
 export default function Guestlist() {
     const [guests, setGuests] = useState([])
-    const [access, setAccess] = useState('')
+    const [access, setAccess] = useState()
     const [checkedIn, setCheckedIn] = useState('');
     const [loading, setLoading] = useState(false)
     const [searchQuery, setSearchQuery] = useState('');
@@ -17,7 +17,7 @@ export default function Guestlist() {
 
     useEffect(() => {
         readGuestlist()
-    }, [access, checkedIn])
+    }, [checkedIn])
 
     const readGuestlist = () => {
         fetch('/api/guestlist/guestlist', {
@@ -39,6 +39,7 @@ export default function Guestlist() {
 
                     })
                     setGuests(guests)
+                    updateGuestQrCodes()
                     console.log('successfully returned guestlist.')
                 }
             })
@@ -49,61 +50,61 @@ export default function Guestlist() {
 
     const updateGuestAccess = async (id) => {
         setLoading(true);
-
-        return fetch(`/api/guestlist/guestlist`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id }),
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                } else {
-                    console.error('Failed to update guest access status:', res.statusText);
-                    throw new Error('Failed to update guest access status');
-                }
-            })
-            .then(({ access: updatedAccess }) => {
-                setAccess(updatedAccess);
-                return updatedAccess;
-            })
-            .catch((error) => {
-                console.error('Error updating guest access status:', error);
-                throw error;
-            })
-            .finally(() => {
-                setLoading(false);
+    
+        try {
+            const response = await fetch(`/api/guestlist/guestlist`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id }),
             });
+    
+            if (!response.ok) {
+                console.error('Failed to update guest access status:', response.statusText);
+                throw new Error('Failed to update guest access status');
+            }
+    
+            const { access: updatedAccess } = await response.json();
+            console.log("Updated Access:", updatedAccess)
+            setAccess(updatedAccess);
+            return updatedAccess;
+        } catch (error) {
+            console.error('Error updating guest access status:', error);
+            throw error;
+        } finally {
+            readGuestlist()
+            setLoading(false);
+        }
     };
+    
 
-    const updateCheckIn = async (id) => {
-        setLoading(true);
+    // const updateCheckIn = async (id) => {
+    //     setLoading(true);
 
-        return fetch(`/api/guestlist/checkIn`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id }),
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                } else {
-                    console.error('Failed to update guest checked-in status:', res.statusText);
-                    throw new Error('Failed to update guest checked-in status');
-                }
-            })
-            .then(({ checkedIn: updatedCheckIn }) => {
-                setCheckedIn(updatedCheckIn);
-                return updatedCheckIn;
-            })
-            .catch((error) => {
-                console.error('Error updating guest checked-in status:', error);
-                throw error;
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    };
+    //     return fetch(`/api/guestlist/checkIn`, {
+    //         method: "PUT",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify({ id }),
+    //     })
+    //         .then((res) => {
+    //             if (res.ok) {
+    //                 return res.json();
+    //             } else {
+    //                 console.error('Failed to update guest checked-in status:', res.statusText);
+    //                 throw new Error('Failed to update guest checked-in status');
+    //             }
+    //         })
+    //         .then(({ checkedIn: updatedCheckIn }) => {
+    //             setCheckedIn(updatedCheckIn);
+    //             return updatedCheckIn;
+    //         })
+    //         .catch((error) => {
+    //             console.error('Error updating guest checked-in status:', error);
+    //             throw error;
+    //         })
+    //         .finally(() => {
+    //             setLoading(false);
+    //         });
+    // };
 
     const deleteGuest = async (id) => {
         setLoading(true)
@@ -217,6 +218,8 @@ export default function Guestlist() {
     };
 
     const updateGuestQrCodes = async () => {
+        setLoading(true)
+
         try {
             const res = await fetch('/api/guestlist/guestlist', {
                 method: 'GET',
@@ -239,6 +242,7 @@ export default function Guestlist() {
                 });
 
                 setGuests(guestsWithQRCodes);
+                setLoading(false)
                 console.log('successfully returned guestlist.');
             }
         } catch (error) {
@@ -265,10 +269,14 @@ export default function Guestlist() {
                                 value={searchQuery}
                                 onChange={handleSearchInputChange}
                                 className={styles.searchInput}
+                                disabled={loading}
                             />
                         </div>
 
-                        <button onClick={() => updateGuestQrCodes()}>
+                        <button
+                            onClick={() => updateGuestQrCodes()}
+                            className={styles.updateQrButton}
+                        >
                             UPDATE QR CODES
                         </button>
                     </div>
@@ -290,8 +298,8 @@ export default function Guestlist() {
                                     <th className={styles.addedColumn}>Added</th>
                                     <th className={styles.updatedColumn}>Updated</th>
                                     <th className={styles.accessColumn}>Access</th>
-                                    <th>QR</th>
-                                    <th className={styles.accessColumn}>Checked-In</th>
+                                    <th className={styles.qrColumn}>QR</th>
+                                    <th className={styles.checkedInColumn}>Checked-In</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -340,15 +348,16 @@ export default function Guestlist() {
                                                 {guest.qrCode &&
                                                     <img
                                                         src={guest.qrCode}
+                                                        className={styles.qrCode}
                                                         alt="QR Code"
                                                     />
                                                 }
                                             </td>
-                                            <td>
+                                            <td className={styles.checkedIn}>
                                                 <input
                                                     type="checkbox"
                                                     checked={guest.checkedIn}
-                                                    onChange={() => updateCheckIn(guest.id)}
+                                                    // onChange={() => updateCheckIn(guest.id)}
                                                     disabled={loading}
                                                 />
                                             </td>
