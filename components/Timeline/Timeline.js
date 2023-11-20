@@ -54,7 +54,7 @@ const calculateCurrentTimePosition = (currentTime, performances, totalDuration) 
 
 const renderMarkers = (performances) => {
     const markers = [];
-    const interval = 2 * 60; // 5 minutes in seconds
+    const interval = 5 * 60; // 5 minutes in seconds
     const specialInterval = 30 * 60; // 30 minutes in seconds
 
     const startTime = moment(`${performances[0].startDate} ${performances[0].startTime}`, 'YYYY-MM-DD h:mma');
@@ -69,7 +69,7 @@ const renderMarkers = (performances) => {
             <div
                 key={i}
                 className={styles.marker}
-                style={{ left: `calc(${(i / totalDuration.asSeconds()) * 100}% - 1px)`, height: i % specialInterval === 0 ? '20px' : '10px' }}
+                style={{ left: `calc(${(i / totalDuration.asSeconds()) * 100}%)`, height: i % specialInterval === 0 ? '80px' : '54px' }}
             >
                 <div className={styles.markerText}>{i % specialInterval === 0 ? currentTime.format('h:mm') : ''}</div>
             </div>
