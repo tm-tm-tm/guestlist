@@ -48,7 +48,7 @@ export default function Event() {
             <HalfPageLayout>
 
                 <Suspense>
-                    <SetTimes performances={performances} />
+                    {/* <SetTimes performances={performances} /> */}
                     <Timeline performances={performances} />
                 </Suspense>
 

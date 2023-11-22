@@ -50,19 +50,19 @@ export default function Guestlist() {
 
     const updateGuestAccess = async (id) => {
         setLoading(true);
-    
+
         try {
             const response = await fetch(`/api/guestlist/guestlist`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id }),
             });
-    
+
             if (!response.ok) {
                 console.error('Failed to update guest access status:', response.statusText);
                 throw new Error('Failed to update guest access status');
             }
-    
+
             const { access: updatedAccess } = await response.json();
             console.log("Updated Access:", updatedAccess)
             setAccess(updatedAccess);
@@ -75,7 +75,7 @@ export default function Guestlist() {
             setLoading(false);
         }
     };
-    
+
 
     // const updateCheckIn = async (id) => {
     //     setLoading(true);
@@ -119,18 +119,39 @@ export default function Guestlist() {
         setLoading(false)
     }
 
+    // const handleSearchInputChange = (e) => {
+    //     const query = e.target.value
+    //     setSearchQuery(query)
+
+    //     // Filter the guests based on the search query
+    //     const filteredData = guests.filter((guest) => {
+    //         const fullName = guest.firstName.toLowerCase() + ' ' + guest.lastName.toLowerCase()
+    //         return fullName.includes(query.toLowerCase())
+    //     })
+
+    //     setFilteredGuests(filteredData)
+    // }
+
+    // SEARCH QUERY WITH DEBOUNCE
     const handleSearchInputChange = (e) => {
-        const query = e.target.value
-        setSearchQuery(query)
+        const query = e.target.value;
+        setSearchQuery(query);
+    };
 
-        // Filter the guests based on the search query
-        const filteredData = guests.filter((guest) => {
-            const fullName = guest.firstName.toLowerCase() + ' ' + guest.lastName.toLowerCase()
-            return fullName.includes(query.toLowerCase())
-        })
+    useEffect(() => {
+        const debounceTimeout = setTimeout(() => {
+            const filteredData = guests.filter((guest) => {
+                const fullName = guest.firstName.toLowerCase() + ' ' + guest.lastName.toLowerCase();
+                return fullName.includes(searchQuery.toLowerCase());
+            });
 
-        setFilteredGuests(filteredData)
-    }
+            console.log('Filtered guests:', filteredData);
+
+            setFilteredGuests(filteredData);
+        }, 300)
+
+        return () => clearTimeout(debounceTimeout);
+    }, [searchQuery])
 
     const guestData = searchQuery ? filteredGuests : guests;
 

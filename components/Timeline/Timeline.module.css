@@ -348,8 +348,34 @@
 
 @media (max-width: 900px) {
     .timeline {
+        position: absolute;
+        height: 100%;
         margin: 12px;
-        padding: 4px 40px;
+        padding: 40px 4px;
+        /* display: flex; */
+        justify-content: center;
+        box-sizing: border-box;
+        /* flex-direction: column; */
+    }
+
+    .timelineContainer {
+        flex-direction: column;
+        height: 100%;
+        width: 200px;
+    }
+
+    .totalProgressBar {
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .timelineSegment {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 32px;
+        justify-content: center;
+        align-items: center;
     }
 
     .artistInfo {
@@ -374,6 +400,13 @@
         padding: 0 0.4em;
         padding-left: 1.8em;
         font-weight: 400;
+    }
+
+    .marker {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        /* rotate: 90deg; */
     }
 
     .markerText {
