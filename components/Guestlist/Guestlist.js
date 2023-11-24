@@ -189,7 +189,6 @@ export default function Guestlist() {
     //     }
     // }
 
-    
     const generateQRCode = async (guest) => {
         try {
             const qrCodeValue = `${guest.id}`;
