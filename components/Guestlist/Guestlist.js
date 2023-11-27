@@ -36,6 +36,7 @@ export default function Guestlist() {
                     guests.forEach((guest) => {
                         guest.timestamp = formatTimestamp(guest.timestamp)
                         guest.updatedAt = formatTimestamp(guest.updatedAt)
+                        guest.checkInTime = formatTimestamp(guest.checkInTime)
 
                     })
                     setGuests(guests)
@@ -93,7 +94,7 @@ export default function Guestlist() {
     //                 throw new Error('Failed to update guest checked-in status');
     //             }
     //         })
-    //         .then(({ checkedIn: updatedCheckIn }) => {
+    //         .then(({ checkIn: updatedCheckIn }) => {
     //             setCheckedIn(updatedCheckIn);
     //             return updatedCheckIn;
     //         })
@@ -260,6 +261,7 @@ export default function Guestlist() {
                 guestsWithQRCodes.forEach((guest) => {
                     guest.timestamp = formatTimestamp(guest.timestamp);
                     guest.updatedAt = formatTimestamp(guest.updatedAt);
+                    guest.checkInTime = formatTimestamp(guest.checkInTime)
                 });
 
                 setGuests(guestsWithQRCodes);
@@ -377,7 +379,7 @@ export default function Guestlist() {
                                             <td className={styles.checkedIn}>
                                                 <input
                                                     type="checkbox"
-                                                    checked={guest.checkedIn}
+                                                    checked={guest.checkIn}
                                                     // onChange={() => updateCheckIn(guest.id)}
                                                     disabled={loading}
                                                 />

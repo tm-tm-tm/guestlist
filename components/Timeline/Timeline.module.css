@@ -34,7 +34,7 @@
 
 .timeline {
     background: gray;
-    margin: 24px;
+    margin: 12px;
     box-sizing: border-box;
     padding: 6px 60px;
     border-radius: 0.8em;
@@ -104,8 +104,6 @@
     border-radius: 0.5em;
     /* background-color: rgb(220, 220, 220); */
     background: linear-gradient(270deg, #DCDCDC -0.64%, #cecece 51.97%, #DCDCDC 100%);
-
-
     /* background: linear-gradient(90deg, #FFF 0%, rgb(223, 223, 223) 50%, #FFF 100%); */
     border: 0.5px solid rgba(192, 192, 192, 1);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;

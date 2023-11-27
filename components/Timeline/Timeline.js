@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getSegmentColor } from '@/utils/Utilities';
 import moment from 'moment';
 import styles from './Timeline.module.css';
+
+import { getSegmentColor } from '@/utils/Utilities';
 import TickCircleSVG from '@/assets/svg/TickSVG';
 import ClockSVG from '@/assets/svg/ClockSVG';
 
@@ -29,6 +30,13 @@ const getAdjustedDateRange = (performance) => {
     return [startDateTime, endDateTime];
 };
 
+const calculateCurrentTimePosition = (currentTime, performances, totalDuration) => {
+    const firstPerformance = performances[0];
+    const firstPerformanceStartDateTime = moment(`${firstPerformance.startDate} ${firstPerformance.startTime}`, 'YYYY-MM-DD h:mma');
+    const elapsedTime = currentTime.diff(firstPerformanceStartDateTime, 'minutes');
+    return (elapsedTime / totalDuration.asMinutes()) * 100;
+};
+
 const calculatePerformancePercentages = (currentTime, performances) => {
     return performances.map((performance) => {
         const [startDateTime, endDateTime] = getAdjustedDateRange(performance);
@@ -43,13 +51,6 @@ const calculatePerformancePercentages = (currentTime, performances) => {
             return 0;
         }
     });
-};
-
-const calculateCurrentTimePosition = (currentTime, performances, totalDuration) => {
-    const firstPerformance = performances[0];
-    const firstPerformanceStartDateTime = moment(`${firstPerformance.startDate} ${firstPerformance.startTime}`, 'YYYY-MM-DD h:mma');
-    const elapsedTime = currentTime.diff(firstPerformanceStartDateTime, 'minutes');
-    return (elapsedTime / totalDuration.asMinutes()) * 100;
 };
 
 const renderMarkers = (performances) => {

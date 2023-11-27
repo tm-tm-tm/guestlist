@@ -76,6 +76,30 @@ export const updateQRCode = async (req, res) => {
 // };
 
 
+// export const updateCheckIn = async (req, res) => {
+//     if (req.method !== 'PUT') {
+//         return res.status(405).json({ message: 'Method not allowed', success: false });
+//     }
+
+//     const { id } = req.body;
+
+//     try {
+//         // Convert the ID to an integer
+//         const guestId = parseInt(id, 10);
+
+//         // Update the user's checkedIn status in the database to true
+//         const updatedCheckIn = await prisma.guestlist.update({
+//             where: { id: guestId },
+//             data: { checkIn: true },
+//         });
+
+//         return res.status(200).json({ success: true, updatedCheckIn });
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).json({ error: 'Error updating check-in status', success: false });
+//     }
+// };
+
 export const updateCheckIn = async (req, res) => {
     if (req.method !== 'PUT') {
         return res.status(405).json({ message: 'Method not allowed', success: false });
@@ -87,10 +111,16 @@ export const updateCheckIn = async (req, res) => {
         // Convert the ID to an integer
         const guestId = parseInt(id, 10);
 
-        // Update the user's checkedIn status in the database to true
+        // Get the current timestamp
+        const currentTimestamp = new Date();
+
+        // Update the user's checkedIn status and checkInTime in the database
         const updatedCheckIn = await prisma.guestlist.update({
             where: { id: guestId },
-            data: { checkedIn: true },
+            data: {
+                checkIn: true,
+                checkInTime: currentTimestamp,
+            },
         });
 
         return res.status(200).json({ success: true, updatedCheckIn });
@@ -99,4 +129,3 @@ export const updateCheckIn = async (req, res) => {
         return res.status(500).json({ error: 'Error updating check-in status', success: false });
     }
 };
-

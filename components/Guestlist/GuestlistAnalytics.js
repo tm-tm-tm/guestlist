@@ -12,7 +12,7 @@ const GuestlistAnalytics = ({ guests, updateGuestlist }) => {
     const guestsWithoutAccess = guests.filter((guest) => guest.access === false).length
     const percentageOfCapacityUsed = (guestsWithAccess / capacity) * 100
     const percentageOfCapacityAvailable = ((capacity - guestsWithAccess) / capacity) * 100
-    const guestsCheckedIn = guests.filter((guest) => guest.checkedIn === true).length;
+    const guestsCheckedIn = guests.filter((guest) => guest.checkIn === true).length;
     const percentageOfGuestsCheckedIn = (guestsCheckedIn / guestsWithAccess) * 100
 
     const handleCapacityChange = (e) => {
@@ -73,7 +73,7 @@ const GuestlistAnalytics = ({ guests, updateGuestlist }) => {
                             Checked In
                         </span>
                         <span className={styles.value}>
-                            {guestsCheckedIn}
+                            {guestsCheckedIn} / {guestsWithAccess}
                         </span>
                     </p>
                 </div>

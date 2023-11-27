@@ -1,6 +1,5 @@
-import { useRef } from 'react'
-import { motion } from "framer-motion"
 import Image from 'next/image'
+import { motion } from "framer-motion"
 import styles from './HalfPageLayout.module.css'
 import PageTransition from '@/components/PageTransition/PageTransition'
 
@@ -11,7 +10,20 @@ const HalfPageLayout = ({ children, cardConstraints }) => {
       <PageTransition>
         <div className={styles.container}>
           <div className={styles.leftHalf}>
+            <div className={styles.nestedContainer}>
 
+            </div>
+            <div className={styles.button}>
+
+            </div>
+
+            <div className={styles.button}>
+
+            </div>
+
+            <div className={styles.button}>
+
+            </div>
           </div>
 
           <div className={styles.rightHalf} >
